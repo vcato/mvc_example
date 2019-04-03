@@ -15,7 +15,8 @@ class QtMyMainWindowView : public MyMainWindowView {
       QMainWindow &main_window,
       MyMainWindowController &controller
     )
-    : MyMainWindowView(controller)
+    : MyMainWindowView(controller),
+      _main_window(main_window)
     {
       assert(main_window.layout());
       QPushButton &button =
@@ -33,7 +34,7 @@ class QtMyMainWindowView : public MyMainWindowView {
     void createOptionsWindow()
     {
       assert(!_options_window_ptr);
-      _options_window_ptr = new QtMyOptionsWindow;
+      _options_window_ptr = new QtMyOptionsWindow(&_main_window);
     }
 
     void redraw3DWindow() override
@@ -48,6 +49,7 @@ class QtMyMainWindowView : public MyMainWindowView {
     }
 
   private:
+    QMainWindow &_main_window;
     QtMyOptionsWindow *_options_window_ptr = nullptr;
 
 };

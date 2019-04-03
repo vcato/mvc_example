@@ -41,8 +41,9 @@ class QtMyOptionsWindowView : public MyOptionsWindowView {
 };
 
 
-QtMyOptionsWindow::QtMyOptionsWindow()
-: _view_ptr(std::make_unique<QtMyOptionsWindowView>(*this,*_controller_ptr))
+QtMyOptionsWindow::QtMyOptionsWindow(QWidget *parent_ptr)
+: QDialog(parent_ptr),
+  _view_ptr(std::make_unique<QtMyOptionsWindowView>(*this,*_controller_ptr))
 {
 }
 

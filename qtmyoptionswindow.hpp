@@ -9,7 +9,7 @@ struct QtMyOptionsWindowView;
 
 class QtMyOptionsWindow : public QDialog, public MyOptionsWindow {
   public:
-    QtMyOptionsWindow();
+    QtMyOptionsWindow(QWidget *parent_ptr);
     ~QtMyOptionsWindow();
 
     void open() override { show(); }
