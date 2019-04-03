@@ -11,20 +11,19 @@
 using std::cerr;
 
 
-class QtMyMainWindowView : public MyMainWindowView {
+class QtMyMainWindow::QtView : public MyMainWindow::View {
   public:
-    QtMyMainWindowView(
-      QMainWindow &main_window,
-      MyMainWindowController &controller
-    )
-    : MyMainWindowView(controller),
-      _main_window(main_window)
+    QtView(QtMyMainWindow &main_window)
+    : MyMainWindow::View(main_window),
+      _main_window_widget(main_window)
     {
-      assert(main_window.layout());
+      assert(_main_window_widget.layout());
       QPushButton &button =
-        createCentralWidget<QPushButton>(main_window,"Open Options");
+        createCentralWidget<QPushButton>(_main_window_widget,"Open Options");
       QObject::connect(&button,&QPushButton::clicked,
-        [&]{ controller.onOpenOptionsPressed(); }
+        [&]{
+          _controller().onOpenOptionsPressed();
+        }
       );
     }
 
@@ -36,15 +35,13 @@ class QtMyMainWindowView : public MyMainWindowView {
     void createOptionsWindow()
     {
       assert(!_options_window_ptr);
-      _options_window_ptr = new QtMyOptionsWindow(&_main_window);
+      _options_window_ptr = new QtMyOptionsWindow(&_main_window_widget);
     }
 
     void redraw3DWindow() override
     {
-      assert(_options_ptr);
-
       cerr << "Redrawing 3D window\n";
-      cerr << "  label_axis: " << _options_ptr->label_axes << "\n";
+      cerr << "  label_axis: " << _applicationData().options.label_axes << "\n";
     }
 
     MyOptionsWindow &optionsWindow() override
@@ -54,16 +51,22 @@ class QtMyMainWindowView : public MyMainWindowView {
     }
 
   private:
-    QMainWindow &_main_window;
+    QMainWindow &_main_window_widget;
     QtMyOptionsWindow *_options_window_ptr = nullptr;
-
 };
 
 
 QtMyMainWindow::QtMyMainWindow()
-: _view_ptr{std::make_unique<QtMyMainWindowView>(*this,*_controller_ptr)}
+: _view_ptr{std::make_unique<QtView>(*this)}
 {
 }
 
 
 QtMyMainWindow::~QtMyMainWindow() = default;
+
+
+MyMainWindow::View &QtMyMainWindow::_view()
+{
+  assert(_view_ptr);
+  return *_view_ptr;
+}

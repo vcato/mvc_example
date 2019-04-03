@@ -4,9 +4,6 @@
 #include <memory>
 #include "options.hpp"
 
-class MyOptionsWindowController;
-class MyOptionsWindowView;
-
 
 struct MyOptionsWindowClient {
   virtual void onOptionsChanged() = 0;
@@ -23,10 +20,15 @@ class MyOptionsWindow {
     virtual void open() = 0;
 
   protected:
-    std::unique_ptr<MyOptionsWindowController> _controller_ptr;
+    struct View;
+    struct Controller;
 
-  private:
-    virtual MyOptionsWindowView &_view() = 0;
+    virtual View &_view() = 0;
+    std::unique_ptr<Controller> _controller_ptr;
+    Options *_options_ptr = nullptr;
+    MyOptionsWindowClient *_client_ptr = nullptr;
+    MyOptionsWindowClient &_client();
+    Options &_options();
 };
 
 

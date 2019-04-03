@@ -1,27 +1,30 @@
 #include "myoptionswindow.hpp"
 
 
-class MyOptionsWindowView {
+class MyOptionsWindow::View {
   public:
+    View(MyOptionsWindow &);
+
     virtual void setLabelAxesToggleState(bool) = 0;
     virtual bool labelAxesToggleState() const = 0;
 
-    MyOptionsWindowView(MyOptionsWindowController &controller);
-
   protected:
-    MyOptionsWindowController &_controller;
+    MyOptionsWindow &_options_window;
+    Controller &_controller();
 };
 
 
-class MyOptionsWindowController {
+class MyOptionsWindow::Controller {
   public:
-    void setViewPtr(MyOptionsWindowView *);
-    void setClientPtr(MyOptionsWindowClient *);
-    void setOptionsPtr(Options *);
+    Controller(MyOptionsWindow &);
+
     void onLabelAxesToggled();
+    void onOptionsChanged();
 
   private:
-    Options *_options_ptr = nullptr;
-    MyOptionsWindowClient *_client_ptr = nullptr;
-    MyOptionsWindowView *_view_ptr = nullptr;
+    MyOptionsWindow &_options_window;
+
+    View &_view();
+    MyOptionsWindowClient &_client();
+    Options &_options();
 };

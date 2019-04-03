@@ -7,20 +7,19 @@
 #include "widgetutil.hpp"
 
 
-class QtMyOptionsWindowView : public MyOptionsWindowView {
+class QtMyOptionsWindow::QtView : public MyOptionsWindow::View {
   public:
-    QtMyOptionsWindowView(
-      QDialog &parent,
-      MyOptionsWindowController &controller
-    )
-    : MyOptionsWindowView(controller)
+    QtView(QDialog &parent,MyOptionsWindow &options_window)
+    : MyOptionsWindow::View(options_window)
     {
       auto &layout = createLayout<QVBoxLayout>(parent);
       QCheckBox &label_axes_toggle =
         createWidget<QCheckBox>(layout,"Label Axes");
       _label_axes_toggle_ptr = &label_axes_toggle;
       QObject::connect(&label_axes_toggle,&QCheckBox::stateChanged,
-        [&]{ _controller.onLabelAxesToggled(); }
+        [&]{
+          _controller().onLabelAxesToggled();
+        }
       );
     }
 
@@ -43,7 +42,7 @@ class QtMyOptionsWindowView : public MyOptionsWindowView {
 
 QtMyOptionsWindow::QtMyOptionsWindow(QWidget *parent_ptr)
 : QDialog(parent_ptr),
-  _view_ptr(std::make_unique<QtMyOptionsWindowView>(*this,*_controller_ptr))
+  _view_ptr(std::make_unique<QtView>(*this,*this))
 {
 }
 
@@ -51,7 +50,7 @@ QtMyOptionsWindow::QtMyOptionsWindow(QWidget *parent_ptr)
 QtMyOptionsWindow::~QtMyOptionsWindow() = default;
 
 
-MyOptionsWindowView &QtMyOptionsWindow::_view()
+MyOptionsWindow::View &QtMyOptionsWindow::_view()
 {
   assert(_view_ptr);
   return *_view_ptr;

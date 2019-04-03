@@ -10,46 +10,58 @@ using std::cerr;
 // MyOptionsWindowView
 //////////////////////
 
-MyOptionsWindowView::MyOptionsWindowView(MyOptionsWindowController &controller)
-: _controller(controller)
+MyOptionsWindow::View::View(MyOptionsWindow &options_window)
+: _options_window(options_window)
 {
-  controller.setViewPtr(this);
+}
+
+
+MyOptionsWindow::Controller &MyOptionsWindow::View::_controller()
+{
+  return *_options_window._controller_ptr;
 }
 
 
 // MyOptionsWindowController
 ////////////////////////////
 
-void MyOptionsWindowController::setOptionsPtr(Options *arg)
+
+MyOptionsWindow::Controller::Controller(
+  MyOptionsWindow &options_window
+)
+: _options_window(options_window)
 {
-  _options_ptr = arg;
-
-  assert(_options_ptr);
-  assert(_view_ptr);
-
-  _view_ptr->setLabelAxesToggleState(_options_ptr->label_axes);
 }
 
 
-void MyOptionsWindowController::setViewPtr(MyOptionsWindowView *arg)
+void MyOptionsWindow::Controller::onLabelAxesToggled()
 {
-  _view_ptr = arg;
+  _options().label_axes = _view().labelAxesToggleState();
+  _client().onOptionsChanged();
 }
 
 
-void MyOptionsWindowController::onLabelAxesToggled()
+void MyOptionsWindow::Controller::onOptionsChanged()
 {
-  assert(_client_ptr);
-  assert(_options_ptr);
-  assert(_view_ptr);
-  _options_ptr->label_axes = _view_ptr->labelAxesToggleState();
-  _client_ptr->onOptionsChanged();
+  _view().setLabelAxesToggleState(_options().label_axes);
 }
 
 
-void MyOptionsWindowController::setClientPtr(MyOptionsWindowClient *arg)
+MyOptionsWindow::View &MyOptionsWindow::Controller::_view()
 {
-  _client_ptr = arg;
+  return _options_window._view();
+}
+
+
+MyOptionsWindowClient &MyOptionsWindow::Controller::_client()
+{
+  return _options_window._client();
+}
+
+
+Options &MyOptionsWindow::Controller::_options()
+{
+  return _options_window._options();
 }
 
 
@@ -57,7 +69,7 @@ void MyOptionsWindowController::setClientPtr(MyOptionsWindowClient *arg)
 //////////////////
 
 MyOptionsWindow::MyOptionsWindow()
-: _controller_ptr(std::make_unique<MyOptionsWindowController>())
+: _controller_ptr(std::make_unique<Controller>(*this))
 {
 }
 
@@ -67,11 +79,26 @@ MyOptionsWindow::~MyOptionsWindow() = default;
 
 void MyOptionsWindow::setOptionsPtr(Options *arg)
 {
-  _controller_ptr->setOptionsPtr(arg);
+  _options_ptr = arg;
+  _controller_ptr->onOptionsChanged();
 }
 
 
 void MyOptionsWindow::setClientPtr(MyOptionsWindowClient *arg)
 {
-  _controller_ptr->setClientPtr(arg);
+  _client_ptr = arg;
+}
+
+
+MyOptionsWindowClient &MyOptionsWindow::_client()
+{
+  assert(_client_ptr);
+  return *_client_ptr;
+}
+
+
+Options &MyOptionsWindow::_options()
+{
+  assert(_options_ptr);
+  return *_options_ptr;
 }

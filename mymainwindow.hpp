@@ -4,8 +4,6 @@
 #include <memory>
 #include "applicationdata.hpp"
 
-struct MyMainWindowController;
-
 
 class MyMainWindow {
   public:
@@ -16,7 +14,12 @@ class MyMainWindow {
     virtual void open() = 0;
 
   protected:
-    std::unique_ptr<MyMainWindowController> _controller_ptr;
+    struct View;
+    struct Controller;
+
+    virtual View &_view() = 0;
+    std::unique_ptr<Controller> _controller_ptr;
+    ApplicationData *_application_data_ptr = 0;
 };
 
 

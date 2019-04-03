@@ -7,7 +7,7 @@ clean:
 
 PACKAGES=Qt5Widgets
 
-CXXFLAGS=-W -Wall -pedantic -std=c++14 \
+CXXFLAGS=-W -Wall -Wundef -pedantic -std=c++14 \
   `pkg-config --cflags $(PACKAGES)` \
   -fpic -MD -MP -D_GLIBCXX_DEBUG -g
 

@@ -2,9 +2,6 @@
 #include "mymainwindow.hpp"
 
 
-class QtMyMainWindowView;
-
-
 class QtMyMainWindow : public QMainWindow, public MyMainWindow
 {
   public:
@@ -14,5 +11,7 @@ class QtMyMainWindow : public QMainWindow, public MyMainWindow
     void open() override { show(); }
 
   private:
-    std::unique_ptr<QtMyMainWindowView> _view_ptr;
+    struct QtView;
+    std::unique_ptr<QtView> _view_ptr;
+    MyMainWindow::View &_view() override;
 };

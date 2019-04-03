@@ -4,9 +4,6 @@
 #include <QDialog>
 #include "myoptionswindow.hpp"
 
-struct QtMyOptionsWindowView;
-
-
 class QtMyOptionsWindow : public QDialog, public MyOptionsWindow {
   public:
     QtMyOptionsWindow(QWidget *parent_ptr);
@@ -15,9 +12,9 @@ class QtMyOptionsWindow : public QDialog, public MyOptionsWindow {
     void open() override { show(); }
 
   private:
-    std::unique_ptr<QtMyOptionsWindowView> _view_ptr;
-
-    MyOptionsWindowView &_view() override;
+    struct QtView;
+    std::unique_ptr<QtView> _view_ptr;
+    MyOptionsWindow::View &_view() override;
 };
 
 

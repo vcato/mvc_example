@@ -2,13 +2,10 @@
 #include "applicationdata.hpp"
 #include "myoptionswindow.hpp"
 
-struct MyOptionsWindow;
 
-
-class MyMainWindowView {
+class MyMainWindow::View {
   public:
-    MyMainWindowView(MyMainWindowController &controller);
-    void setOptionsPtr(Options *);
+    View(MyMainWindow &);
 
     virtual bool optionsWindowExists() const = 0;
     virtual void createOptionsWindow() = 0;
@@ -16,34 +13,34 @@ class MyMainWindowView {
     virtual void redraw3DWindow() = 0;
 
   protected:
-    MyMainWindowController &_controller;
-    Options *_options_ptr = nullptr;
+    MyMainWindow &_main_window;
+
+    Controller &_controller();
+    ApplicationData &_applicationData();
 };
 
 
-class MyMainWindowController {
+class MyMainWindow::Controller {
   public:
-    MyMainWindowController();
+    Controller(MyMainWindow &);
 
     void onOpenOptionsPressed();
     void onOptionsWindowOptionsChanged();
-    void setViewPtr(MyMainWindowView *);
-    void setApplicationDataPtr(ApplicationData *);
 
   private:
     class OptionsWindowClient : public MyOptionsWindowClient {
       public:
-        OptionsWindowClient(MyMainWindowController &controller_arg);
+        OptionsWindowClient(Controller &);
 
         void onOptionsChanged() override;
 
       private:
-        MyMainWindowController &_controller;
+        Controller &_controller;
     };
 
-    ApplicationData *_application_data_ptr = nullptr;
-    MyMainWindowView *_view_ptr = nullptr;
     OptionsWindowClient _options_window_client;
+    MyMainWindow &_main_window;
 
-    MyMainWindowView &_view();
+    ApplicationData &_applicationData();
+    View &_view();
 };
