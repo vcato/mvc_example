@@ -1,9 +1,13 @@
 #include "mymainwindow.hpp"
 
 #include <cassert>
+#include <sstream>
 #include "mymainwindowimpl.hpp"
 #include "myoptionswindow.hpp"
 #include "myoptionswindowimpl.hpp"
+
+using std::ostringstream;
+using std::string;
 
 
 namespace {
@@ -49,13 +53,12 @@ namespace {
 class FakeMainWindow : public MyMainWindow, public MyMainWindowView {
   public:
     bool is_open = false;
-    int redraw_count = 0;
     bool options_window_exists = false;
     FakeOptionsWindow options_window;
+    ostringstream command_stream;
 
-    FakeMainWindow(ApplicationData &data)
-    : MyMainWindow(data),
-      MyMainWindowView(*_controller_ptr)
+    FakeMainWindow()
+    : MyMainWindowView(*_controller_ptr)
     {
     }
 
@@ -67,6 +70,8 @@ class FakeMainWindow : public MyMainWindow, public MyMainWindowView {
       assert(_controller_ptr);
       _controller_ptr->onOpenOptionsPressed();
     }
+
+    string commandString() { return command_stream.str(); }
 
   private:
     bool optionsWindowExists() const override
@@ -86,7 +91,7 @@ class FakeMainWindow : public MyMainWindow, public MyMainWindowView {
 
     void redraw3DWindow() override
     {
-      ++redraw_count;
+      command_stream << "redraw3DWindow()\n";
     }
 };
 }
@@ -95,12 +100,13 @@ class FakeMainWindow : public MyMainWindow, public MyMainWindowView {
 int main()
 {
   ApplicationData application_data;
-  FakeMainWindow main_window(application_data);
+  FakeMainWindow main_window;
+  main_window.setApplicationDataPtr(&application_data);
   main_window.open();
   main_window.userPressesOpenOptions();
   assert(main_window.options_window.is_open);
-  assert(main_window.redraw_count == 0);
   main_window.options_window.userTogglesLabelAxes();
-  assert(main_window.redraw_count == 1);
   assert(application_data.options.label_axes);
+  string expected_command_string = "redraw3DWindow()\n";
+  assert(main_window.commandString() == expected_command_string);
 }

@@ -32,9 +32,22 @@ void MyMainWindowController::OptionsWindowClient::onOptionsChanged()
 }
 
 
+MyMainWindowController::MyMainWindowController()
+: _options_window_client(*this)
+{
+}
+
+
 void MyMainWindowController::setViewPtr(MyMainWindowView *arg)
 {
   _view_ptr = arg;
+  assert(_view_ptr);
+}
+
+
+void MyMainWindowController::setApplicationDataPtr(ApplicationData *arg)
+{
+  _application_data_ptr = arg;
 }
 
 
@@ -45,7 +58,8 @@ void MyMainWindowController::onOpenOptionsPressed()
   if (!view.optionsWindowExists()) {
     view.createOptionsWindow();
     view.optionsWindow().setClientPtr(&_options_window_client);
-    view.optionsWindow().setOptionsPtr(&_application_data.options);
+    assert(_application_data_ptr);
+    view.optionsWindow().setOptionsPtr(&_application_data_ptr->options);
   }
 
   view.optionsWindow().open();
@@ -55,15 +69,6 @@ void MyMainWindowController::onOpenOptionsPressed()
 void MyMainWindowController::onOptionsWindowOptionsChanged()
 {
   _view().redraw3DWindow();
-}
-
-
-MyMainWindowController::MyMainWindowController(
-  ApplicationData &application_data
-)
-: _application_data(application_data),
-  _options_window_client(*this)
-{
 }
 
 
@@ -78,12 +83,16 @@ MyMainWindowView &MyMainWindowController::_view()
 // MyMainWindow
 ///////////////
 
-MyMainWindow::MyMainWindow(
-  ApplicationData &application_data
-)
-: _controller_ptr(std::make_unique<MyMainWindowController>(application_data))
+MyMainWindow::MyMainWindow()
+: _controller_ptr(std::make_unique<MyMainWindowController>())
 {
 }
 
 
 MyMainWindow::~MyMainWindow() = default;
+
+
+void MyMainWindow::setApplicationDataPtr(ApplicationData *arg)
+{
+  _controller_ptr->setApplicationDataPtr(arg);
+}

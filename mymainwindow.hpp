@@ -9,9 +9,10 @@ struct MyMainWindowController;
 
 class MyMainWindow {
   public:
-    MyMainWindow(ApplicationData &application_data);
+    MyMainWindow();
     ~MyMainWindow();
 
+    void setApplicationDataPtr(ApplicationData *);
     virtual void open() = 0;
 
   protected:

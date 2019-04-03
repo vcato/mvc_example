@@ -8,8 +8,9 @@ class QtMyMainWindowView;
 class QtMyMainWindow : public QMainWindow, public MyMainWindow
 {
   public:
-    QtMyMainWindow(ApplicationData &application_data);
+    QtMyMainWindow();
     ~QtMyMainWindow();
+
     void open() override { show(); }
 
   private:

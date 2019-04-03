@@ -21,11 +21,12 @@ class MyMainWindowView {
 
 class MyMainWindowController {
   public:
-    MyMainWindowController(ApplicationData &application_data);
+    MyMainWindowController();
 
     void onOpenOptionsPressed();
     void onOptionsWindowOptionsChanged();
     void setViewPtr(MyMainWindowView *);
+    void setApplicationDataPtr(ApplicationData *);
 
   private:
     class OptionsWindowClient : public MyOptionsWindowClient {
@@ -38,7 +39,7 @@ class MyMainWindowController {
         MyMainWindowController &_controller;
     };
 
-    ApplicationData &_application_data;
+    ApplicationData *_application_data_ptr = nullptr;
     MyMainWindowView *_view_ptr = nullptr;
     OptionsWindowClient _options_window_client;
 

@@ -55,9 +55,8 @@ class QtMyMainWindowView : public MyMainWindowView {
 };
 
 
-QtMyMainWindow::QtMyMainWindow(ApplicationData &application_data)
-: MyMainWindow(application_data),
-  _view_ptr{std::make_unique<QtMyMainWindowView>(*this,*_controller_ptr)}
+QtMyMainWindow::QtMyMainWindow()
+: _view_ptr{std::make_unique<QtMyMainWindowView>(*this,*_controller_ptr)}
 {
 }
 
