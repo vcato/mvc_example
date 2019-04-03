@@ -44,12 +44,6 @@ class FakeOptionsWindow : public MyOptionsWindow
 
     void open() override { is_open = true; }
 
-    Controller &_controller()
-    {
-      assert(MyOptionsWindow::_controller_ptr);
-      return *MyOptionsWindow::_controller_ptr;
-    }
-
     void userTogglesLabelAxes()
     {
       assert(is_open);
@@ -113,18 +107,12 @@ class FakeMainWindow : public MyMainWindow
 
     MyMainWindow::View &_view() override { return view; }
 
-    MyMainWindow::Controller &controller()
-    {
-      assert(MyMainWindow::_controller_ptr);
-      return *MyMainWindow::_controller_ptr;
-    }
-
     void open() override { is_open = true; }
 
     void userPressesOpenOptions()
     {
       assert(is_open);
-      controller().onOpenOptionsPressed();
+      _controller().onOpenOptionsPressed();
     }
 
     string commandString() { return view.command_stream.str(); }

@@ -9,9 +9,10 @@ class MyOptionsWindow::View {
     virtual bool labelAxesToggleState() const = 0;
 
   protected:
-    MyOptionsWindow &_options_window;
-
     Controller &_controller();
+
+  private:
+    MyOptionsWindow &_options_window;
 };
 
 

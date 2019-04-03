@@ -13,10 +13,11 @@ class MyMainWindow::View {
     virtual void redraw3DWindow() = 0;
 
   protected:
-    MyMainWindow &_main_window;
-
-    Controller &_controller();
     ApplicationData &_applicationData();
+    Controller &_controller();
+
+  private:
+    MyMainWindow &_main_window;
 };
 
 
