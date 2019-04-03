@@ -43,7 +43,7 @@ struct FakeOptionsWindow : MyOptionsWindow {
     is_open = true;
   }
 
-  void userTogglesShowAxes()
+  void userTogglesLabelAxes()
   {
     assert(is_open);
     view.label_axes_state = !view.label_axes_state;
@@ -127,7 +127,7 @@ int main()
   main_window.open();
   main_window.userPressesOpenOptions();
   assert(main_window.view.options_window.is_open);
-  main_window.view.options_window.userTogglesShowAxes();
+  main_window.view.options_window.userTogglesLabelAxes();
   assert(main_window.view.redraw_count == 1);
   assert(appllication_data.options.label_axes);
 }
