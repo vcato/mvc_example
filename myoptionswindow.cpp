@@ -7,12 +7,18 @@
 using std::cerr;
 
 
+// MyOptionsWindowView
+//////////////////////
+
 MyOptionsWindowView::MyOptionsWindowView(MyOptionsWindowController &controller)
 : _controller(controller)
 {
   controller.setViewPtr(this);
 }
 
+
+// MyOptionsWindowController
+////////////////////////////
 
 void MyOptionsWindowController::setOptionsPtr(Options *arg)
 {
@@ -47,6 +53,9 @@ void MyOptionsWindowController::setClientPtr(MyOptionsWindowClient *arg)
 }
 
 
+// MyOptionsWindow
+//////////////////
+
 MyOptionsWindow::MyOptionsWindow()
 : _controller_ptr(std::make_unique<MyOptionsWindowController>())
 {
@@ -66,5 +75,3 @@ void MyOptionsWindow::setClientPtr(MyOptionsWindowClient *arg)
 {
   _controller_ptr->setClientPtr(arg);
 }
-
-

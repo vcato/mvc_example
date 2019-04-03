@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 
+
 template <typename Layout,typename Widget>
 static Layout &createLayout(Widget &widget)
 {

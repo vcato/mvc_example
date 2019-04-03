@@ -1,10 +1,10 @@
 #include "qtmymainwindow.hpp"
+#include "mymainwindowimpl.hpp"
 
 #include <iostream>
 #include <cassert>
 #include <QPushButton>
 #include <QMainWindow>
-#include "mymainwindowimpl.hpp"
 #include "qtmyoptionswindow.hpp"
 #include "widgetutil.hpp"
 

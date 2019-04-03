@@ -1,14 +1,15 @@
-struct MyOptionsWindowClient;
-struct MyOptionsWindowController;
+#include "myoptionswindow.hpp"
 
 
-struct MyOptionsWindowView {
-  virtual void setLabelAxesToggleState(bool) = 0;
-  virtual bool labelAxesToggleState() const = 0;
+class MyOptionsWindowView {
+  public:
+    virtual void setLabelAxesToggleState(bool) = 0;
+    virtual bool labelAxesToggleState() const = 0;
 
-  MyOptionsWindowView(MyOptionsWindowController &controller);
+    MyOptionsWindowView(MyOptionsWindowController &controller);
 
-  MyOptionsWindowController &_controller;
+  protected:
+    MyOptionsWindowController &_controller;
 };
 
 

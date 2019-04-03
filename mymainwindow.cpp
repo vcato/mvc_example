@@ -5,6 +5,9 @@
 #include "myoptionswindow.hpp"
 
 
+// MyMainWindowView
+///////////////////
+
 MyMainWindowView::MyMainWindowView(MyMainWindowController &controller)
 : _controller(controller)
 {
@@ -12,14 +15,21 @@ MyMainWindowView::MyMainWindowView(MyMainWindowController &controller)
 }
 
 
-MyMainWindow::MyMainWindow(
-  ApplicationData &application_data
-) : _controller_ptr(std::make_unique<MyMainWindowController>(application_data))
+// MyMainWindowController
+/////////////////////////
+
+MyMainWindowController::OptionsWindowClient::OptionsWindowClient(
+  MyMainWindowController &controller
+)
+: _controller(controller)
 {
 }
 
 
-MyMainWindow::~MyMainWindow() = default;
+void MyMainWindowController::OptionsWindowClient::onOptionsChanged()
+{
+  _controller.onOptionsWindowOptionsChanged();
+}
 
 
 void MyMainWindowController::setViewPtr(MyMainWindowView *arg)
@@ -39,12 +49,6 @@ void MyMainWindowController::onOpenOptionsPressed()
   }
 
   view.optionsWindow().open();
-}
-
-
-void MyMainWindowController::OptionsWindowClient::onOptionsChanged()
-{
-  controller.onOptionsWindowOptionsChanged();
 }
 
 
@@ -68,3 +72,18 @@ MyMainWindowView &MyMainWindowController::_view()
   assert(_view_ptr);
   return *_view_ptr;
 }
+
+
+
+// MyMainWindow
+///////////////
+
+MyMainWindow::MyMainWindow(
+  ApplicationData &application_data
+)
+: _controller_ptr(std::make_unique<MyMainWindowController>(application_data))
+{
+}
+
+
+MyMainWindow::~MyMainWindow() = default;

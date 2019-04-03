@@ -1,19 +1,21 @@
+#include "mymainwindow.hpp"
 #include "applicationdata.hpp"
 #include "myoptionswindow.hpp"
-
 
 struct MyOptionsWindow;
 
 
-struct MyMainWindowView {
-  virtual bool optionsWindowExists() const = 0;
-  virtual void createOptionsWindow() = 0;
-  virtual MyOptionsWindow &optionsWindow() = 0;
-  virtual void redraw3DWindow() = 0;
+class MyMainWindowView {
+  public:
+    MyMainWindowView(MyMainWindowController &controller);
 
-  MyMainWindowView(MyMainWindowController &controller);
+    virtual bool optionsWindowExists() const = 0;
+    virtual void createOptionsWindow() = 0;
+    virtual MyOptionsWindow &optionsWindow() = 0;
+    virtual void redraw3DWindow() = 0;
 
-  MyMainWindowController &_controller;
+  protected:
+    MyMainWindowController &_controller;
 };
 
 
@@ -26,15 +28,14 @@ class MyMainWindowController {
     void setViewPtr(MyMainWindowView *);
 
   private:
-    struct OptionsWindowClient : MyOptionsWindowClient {
-      MyMainWindowController &controller;
+    class OptionsWindowClient : public MyOptionsWindowClient {
+      public:
+        OptionsWindowClient(MyMainWindowController &controller_arg);
 
-      OptionsWindowClient(MyMainWindowController &controller_arg)
-      : controller(controller_arg)
-      {
-      }
+        void onOptionsChanged() override;
 
-      void onOptionsChanged() override;
+      private:
+        MyMainWindowController &_controller;
     };
 
     ApplicationData &_application_data;

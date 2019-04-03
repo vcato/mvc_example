@@ -1,3 +1,6 @@
+#ifndef MYMAINWINDOW_HPP_
+#define MYMAINWINDOW_HPP_
+
 #include <memory>
 #include "applicationdata.hpp"
 
@@ -14,3 +17,6 @@ class MyMainWindow {
   protected:
     std::unique_ptr<MyMainWindowController> _controller_ptr;
 };
+
+
+#endif /* MYMAINWINDOW_HPP_ */
