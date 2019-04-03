@@ -16,8 +16,7 @@ MyMainWindow::View::View(MyMainWindow &main_window)
 
 MyMainWindow::Controller &MyMainWindow::View::_controller()
 {
-  assert(_main_window._controller_ptr);
-  return *_main_window._controller_ptr;
+  return _main_window._controller();
 }
 
 
@@ -85,8 +84,7 @@ MyMainWindow::View &MyMainWindow::Controller::_view()
 
 ApplicationData &MyMainWindow::Controller::_applicationData()
 {
-  assert(_main_window._application_data_ptr);
-  return *_main_window._application_data_ptr;
+  return _main_window._applicationData();
 }
 
 
@@ -105,4 +103,18 @@ MyMainWindow::~MyMainWindow() = default;
 void MyMainWindow::setApplicationDataPtr(ApplicationData *arg)
 {
   _application_data_ptr = arg;
+}
+
+
+ApplicationData &MyMainWindow::_applicationData()
+{
+  assert(_application_data_ptr);
+  return *_application_data_ptr;
+}
+
+
+MyMainWindow::Controller &MyMainWindow::_controller()
+{
+  assert(_controller_ptr);
+  return *_controller_ptr;
 }

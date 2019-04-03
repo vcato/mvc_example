@@ -22,11 +22,13 @@ class MyOptionsWindow {
     struct View;
     struct Controller;
 
-    virtual View &_view() = 0;
     std::unique_ptr<Controller> _controller_ptr;
     Client *_client_ptr = nullptr;
-    Client &_client();
+
     Options &_options();
+    virtual View &_view() = 0;
+    Controller &_controller();
+    Client &_client();
 };
 
 
