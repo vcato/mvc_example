@@ -7,127 +7,100 @@
 
 
 namespace {
-struct FakeOptionsWindowView : MyOptionsWindowView {
-  FakeOptionsWindowView(MyOptionsWindowController &controller)
-  : MyOptionsWindowView(controller)
-  {
-  }
+class FakeOptionsWindow : public MyOptionsWindow, public MyOptionsWindowView {
+  public:
+    bool is_open = false;
+    bool label_axes_state = false;
 
-  virtual void setLabelAxesToggleState(bool arg)
-  {
-    label_axes_state = arg;
-  }
+    FakeOptionsWindow()
+    : MyOptionsWindowView(*_controller_ptr)
+    {
+    }
 
-  virtual bool labelAxesToggleState() const
-  {
-    return label_axes_state;
-  }
+    void open() override { is_open = true; }
 
-  bool label_axes_state = false;
+    void userTogglesLabelAxes()
+    {
+      assert(is_open);
+      label_axes_state = !label_axes_state;
+      _controller_ptr->onLabelAxesToggled();
+    }
+
+  private:
+    MyOptionsWindowView &_view() override
+    {
+      return *this;
+    }
+
+    void setLabelAxesToggleState(bool arg) override
+    {
+      label_axes_state = arg;
+    }
+
+    bool labelAxesToggleState() const override
+    {
+      return label_axes_state;
+    }
 };
 }
 
 
 namespace {
-struct FakeOptionsWindow : MyOptionsWindow {
-  bool is_open = false;
-  FakeOptionsWindowView view;
+class FakeMainWindow : public MyMainWindow, public MyMainWindowView {
+  public:
+    bool is_open = false;
+    int redraw_count = 0;
+    bool options_window_exists = false;
+    FakeOptionsWindow options_window;
 
-  FakeOptionsWindow()
-  : view(*_controller_ptr)
-  {
-  }
+    FakeMainWindow(ApplicationData &data)
+    : MyMainWindow(data),
+      MyMainWindowView(*_controller_ptr)
+    {
+    }
 
-  void open() override
-  {
-    is_open = true;
-  }
+    void open() override { is_open = true; }
 
-  void userTogglesLabelAxes()
-  {
-    assert(is_open);
-    view.label_axes_state = !view.label_axes_state;
-    _controller_ptr->onLabelAxesToggled();
-  }
+    void userPressesOpenOptions()
+    {
+      assert(is_open);
+      assert(_controller_ptr);
+      _controller_ptr->onOpenOptionsPressed();
+    }
 
-  MyOptionsWindowView &_view() override
-  {
-    return view;
-  }
-};
-}
+  private:
+    bool optionsWindowExists() const override
+    {
+      return options_window_exists;
+    }
 
+    void createOptionsWindow() override
+    {
+      options_window_exists = true;
+    }
 
-namespace {
-struct FakeMainWindowView : MyMainWindowView {
-  FakeMainWindowView(MyMainWindowController &controller)
-  : MyMainWindowView(controller),
-    options_window()
-  {
-  }
+    MyOptionsWindow &optionsWindow() override
+    {
+      return options_window;
+    }
 
-  int redraw_count = 0;
-
-  bool optionsWindowExists() const override
-  {
-    return options_window_exists;
-  }
-
-  void createOptionsWindow()
-  {
-    options_window_exists = true;
-  }
-
-  MyOptionsWindow &optionsWindow() override
-  {
-    return options_window;
-  }
-
-  virtual void redraw3DWindow()
-  {
-    ++redraw_count;
-  }
-
-  bool options_window_exists = false;
-  FakeOptionsWindow options_window;
-};
-}
-
-
-namespace {
-struct FakeMainWindow : MyMainWindow {
-  FakeMainWindowView view;
-  bool is_open;
-
-  FakeMainWindow(ApplicationData &data)
-  : MyMainWindow(data),
-    view(*_controller_ptr)
-  {
-  }
-
-  void open() override
-  {
-    is_open = true;
-  }
-
-  void userPressesOpenOptions()
-  {
-    assert(is_open);
-    assert(_controller_ptr);
-    _controller_ptr->onOpenOptionsPressed();
-  }
+    void redraw3DWindow() override
+    {
+      ++redraw_count;
+    }
 };
 }
 
 
 int main()
 {
-  ApplicationData appllication_data;
-  FakeMainWindow main_window(appllication_data);
+  ApplicationData application_data;
+  FakeMainWindow main_window(application_data);
   main_window.open();
   main_window.userPressesOpenOptions();
-  assert(main_window.view.options_window.is_open);
-  main_window.view.options_window.userTogglesLabelAxes();
-  assert(main_window.view.redraw_count == 1);
-  assert(appllication_data.options.label_axes);
+  assert(main_window.options_window.is_open);
+  assert(main_window.redraw_count == 0);
+  main_window.options_window.userTogglesLabelAxes();
+  assert(main_window.redraw_count == 1);
+  assert(application_data.options.label_axes);
 }
