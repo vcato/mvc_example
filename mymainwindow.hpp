@@ -18,7 +18,7 @@ class MyMainWindow {
     struct Controller;
 
     std::unique_ptr<Controller> _controller_ptr;
-    ApplicationData *_application_data_ptr = 0;
+    ApplicationData *_application_data_ptr = nullptr;
 
     ApplicationData &_applicationData();
     virtual View &_view() = 0;
