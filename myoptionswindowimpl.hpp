@@ -10,6 +10,7 @@ class MyOptionsWindow::View {
 
   protected:
     MyOptionsWindow &_options_window;
+
     Controller &_controller();
 };
 
@@ -25,6 +26,6 @@ class MyOptionsWindow::Controller {
     MyOptionsWindow &_options_window;
 
     View &_view();
-    MyOptionsWindowClient &_client();
+    Client &_client();
     Options &_options();
 };

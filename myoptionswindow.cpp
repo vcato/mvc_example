@@ -53,7 +53,7 @@ MyOptionsWindow::View &MyOptionsWindow::Controller::_view()
 }
 
 
-MyOptionsWindowClient &MyOptionsWindow::Controller::_client()
+MyOptionsWindow::Client &MyOptionsWindow::Controller::_client()
 {
   return _options_window._client();
 }
@@ -77,20 +77,15 @@ MyOptionsWindow::MyOptionsWindow()
 MyOptionsWindow::~MyOptionsWindow() = default;
 
 
-void MyOptionsWindow::setOptionsPtr(Options *arg)
+void MyOptionsWindow::setClientPtr(Client *arg)
 {
-  _options_ptr = arg;
+  _client_ptr = arg;
+  assert(_controller_ptr);
   _controller_ptr->onOptionsChanged();
 }
 
 
-void MyOptionsWindow::setClientPtr(MyOptionsWindowClient *arg)
-{
-  _client_ptr = arg;
-}
-
-
-MyOptionsWindowClient &MyOptionsWindow::_client()
+MyOptionsWindow::Client &MyOptionsWindow::_client()
 {
   assert(_client_ptr);
   return *_client_ptr;
@@ -99,6 +94,5 @@ MyOptionsWindowClient &MyOptionsWindow::_client()
 
 Options &MyOptionsWindow::_options()
 {
-  assert(_options_ptr);
-  return *_options_ptr;
+  return _client().options();
 }

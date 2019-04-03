@@ -5,18 +5,17 @@
 #include "options.hpp"
 
 
-struct MyOptionsWindowClient {
-  virtual void onOptionsChanged() = 0;
-};
-
-
 class MyOptionsWindow {
   public:
+    struct Client {
+      virtual void onOptionsChanged() = 0;
+      virtual Options &options() = 0;
+    };
+
     MyOptionsWindow();
     ~MyOptionsWindow();
 
-    void setOptionsPtr(Options *);
-    void setClientPtr(MyOptionsWindowClient *);
+    void setClientPtr(Client *);
     virtual void open() = 0;
 
   protected:
@@ -25,9 +24,8 @@ class MyOptionsWindow {
 
     virtual View &_view() = 0;
     std::unique_ptr<Controller> _controller_ptr;
-    Options *_options_ptr = nullptr;
-    MyOptionsWindowClient *_client_ptr = nullptr;
-    MyOptionsWindowClient &_client();
+    Client *_client_ptr = nullptr;
+    Client &_client();
     Options &_options();
 };
 

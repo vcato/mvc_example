@@ -28,11 +28,12 @@ class MyMainWindow::Controller {
     void onOptionsWindowOptionsChanged();
 
   private:
-    class OptionsWindowClient : public MyOptionsWindowClient {
+    class OptionsWindowClient : public MyOptionsWindow::Client {
       public:
         OptionsWindowClient(Controller &);
 
         void onOptionsChanged() override;
+        Options &options() override;
 
       private:
         Controller &_controller;

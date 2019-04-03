@@ -45,6 +45,12 @@ void MyMainWindow::Controller::OptionsWindowClient::onOptionsChanged()
 }
 
 
+Options &MyMainWindow::Controller::OptionsWindowClient::options()
+{
+  return _controller._applicationData().options;
+}
+
+
 MyMainWindow::Controller::Controller(MyMainWindow &main_window)
 : _options_window_client(*this),
   _main_window(main_window)
@@ -59,7 +65,6 @@ void MyMainWindow::Controller::onOpenOptionsPressed()
   if (!view.optionsWindowExists()) {
     view.createOptionsWindow();
     view.optionsWindow().setClientPtr(&_options_window_client);
-    view.optionsWindow().setOptionsPtr(&_applicationData().options);
   }
 
   view.optionsWindow().open();

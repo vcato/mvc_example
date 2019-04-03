@@ -9,10 +9,10 @@
 
 class QtMyOptionsWindow::QtView : public MyOptionsWindow::View {
   public:
-    QtView(QDialog &parent,MyOptionsWindow &options_window)
+    QtView(QtMyOptionsWindow &options_window)
     : MyOptionsWindow::View(options_window)
     {
-      auto &layout = createLayout<QVBoxLayout>(parent);
+      auto &layout = createLayout<QVBoxLayout>(options_window);
       QCheckBox &label_axes_toggle =
         createWidget<QCheckBox>(layout,"Label Axes");
       _label_axes_toggle_ptr = &label_axes_toggle;
@@ -42,7 +42,7 @@ class QtMyOptionsWindow::QtView : public MyOptionsWindow::View {
 
 QtMyOptionsWindow::QtMyOptionsWindow(QWidget *parent_ptr)
 : QDialog(parent_ptr),
-  _view_ptr(std::make_unique<QtView>(*this,*this))
+  _view_ptr(std::make_unique<QtView>(*this))
 {
 }
 
