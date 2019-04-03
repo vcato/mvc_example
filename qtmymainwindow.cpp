@@ -8,6 +8,8 @@
 #include "qtmyoptionswindow.hpp"
 #include "widgetutil.hpp"
 
+using std::cerr;
+
 
 class QtMyMainWindowView : public MyMainWindowView {
   public:
@@ -39,7 +41,10 @@ class QtMyMainWindowView : public MyMainWindowView {
 
     void redraw3DWindow() override
     {
-      std::cerr << "Redrawing 3D window\n";
+      assert(_options_ptr);
+
+      cerr << "Redrawing 3D window\n";
+      cerr << "  label_axis: " << _options_ptr->label_axes << "\n";
     }
 
     MyOptionsWindow &optionsWindow() override

@@ -8,6 +8,7 @@ struct MyOptionsWindow;
 class MyMainWindowView {
   public:
     MyMainWindowView(MyMainWindowController &controller);
+    void setOptionsPtr(Options *);
 
     virtual bool optionsWindowExists() const = 0;
     virtual void createOptionsWindow() = 0;
@@ -16,6 +17,7 @@ class MyMainWindowView {
 
   protected:
     MyMainWindowController &_controller;
+    Options *_options_ptr = nullptr;
 };
 
 

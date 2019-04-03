@@ -73,6 +73,17 @@ class FakeMainWindow : public MyMainWindow, public MyMainWindowView {
 
     string commandString() { return command_stream.str(); }
 
+    void clearCommandString()
+    {
+      command_stream.str("");
+    }
+
+    void expectCommands(const string &expected_commands)
+    {
+      assert(commandString() == expected_commands);
+      clearCommandString();
+    }
+
   private:
     bool optionsWindowExists() const override
     {
@@ -91,7 +102,9 @@ class FakeMainWindow : public MyMainWindow, public MyMainWindowView {
 
     void redraw3DWindow() override
     {
-      command_stream << "redraw3DWindow()\n";
+      assert(_options_ptr);
+      bool label_axes = _options_ptr->label_axes;
+      command_stream << "redraw3DWindow(label_axes=" << label_axes << ")\n";
     }
 };
 }
@@ -106,7 +119,9 @@ int main()
   main_window.userPressesOpenOptions();
   assert(main_window.options_window.is_open);
   main_window.options_window.userTogglesLabelAxes();
-  assert(application_data.options.label_axes);
-  string expected_command_string = "redraw3DWindow()\n";
-  assert(main_window.commandString() == expected_command_string);
+  assert(application_data.options.label_axes == true);
+  main_window.expectCommands("redraw3DWindow(label_axes=1)\n");
+  main_window.options_window.userTogglesLabelAxes();
+  assert(application_data.options.label_axes == false);
+  main_window.expectCommands("redraw3DWindow(label_axes=0)\n");
 }

@@ -15,6 +15,12 @@ MyMainWindowView::MyMainWindowView(MyMainWindowController &controller)
 }
 
 
+void MyMainWindowView::setOptionsPtr(Options *arg)
+{
+  _options_ptr = arg;
+}
+
+
 // MyMainWindowController
 /////////////////////////
 
@@ -48,6 +54,9 @@ void MyMainWindowController::setViewPtr(MyMainWindowView *arg)
 void MyMainWindowController::setApplicationDataPtr(ApplicationData *arg)
 {
   _application_data_ptr = arg;
+
+  assert(arg);
+  _view().setOptionsPtr(&arg->options);
 }
 
 
@@ -94,5 +103,6 @@ MyMainWindow::~MyMainWindow() = default;
 
 void MyMainWindow::setApplicationDataPtr(ApplicationData *arg)
 {
+  assert(_controller_ptr);
   _controller_ptr->setApplicationDataPtr(arg);
 }
