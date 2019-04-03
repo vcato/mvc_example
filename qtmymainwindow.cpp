@@ -38,16 +38,16 @@ class QtMyMainWindow::QtView : public MyMainWindow::View {
       _options_window_ptr = new QtMyOptionsWindow(&_main_window_widget);
     }
 
-    void redraw3DWindow() override
-    {
-      cerr << "Redrawing 3D window\n";
-      cerr << "  label_axis: " << _applicationData().options.label_axes << "\n";
-    }
-
     MyOptionsWindow &optionsWindow() override
     {
       assert(_options_window_ptr);
       return *_options_window_ptr;
+    }
+
+    void redraw3DWindow() override
+    {
+      cerr << "Redrawing 3D window\n";
+      cerr << "  label_axes: " << _applicationData().options.label_axes << "\n";
     }
 
   private:

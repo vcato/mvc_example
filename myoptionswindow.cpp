@@ -18,7 +18,7 @@ MyOptionsWindow::View::View(MyOptionsWindow &options_window)
 
 MyOptionsWindow::Controller &MyOptionsWindow::View::_controller()
 {
-  return *_options_window._controller_ptr;
+  return _options_window._controller();
 }
 
 

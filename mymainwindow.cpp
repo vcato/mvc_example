@@ -22,8 +22,7 @@ MyMainWindow::Controller &MyMainWindow::View::_controller()
 
 ApplicationData &MyMainWindow::View::_applicationData()
 {
-  assert(_main_window._application_data_ptr);
-  return *_main_window._application_data_ptr;
+  return _main_window._applicationData();
 }
 
 
