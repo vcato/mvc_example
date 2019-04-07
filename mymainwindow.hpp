@@ -14,8 +14,8 @@ class MyMainWindow {
     virtual void open() = 0;
 
   protected:
-    struct View;
-    struct Controller;
+    class View;
+    class Controller;
 
     Controller &_controller();
 
