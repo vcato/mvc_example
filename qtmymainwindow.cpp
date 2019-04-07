@@ -17,22 +17,18 @@ class QtMyMainWindow::QtView : public MyMainWindow::View {
     : MyMainWindow::View(main_window),
       _main_window_widget(main_window)
     {
-      assert(_main_window_widget.layout());
-      QPushButton &button =
-        createCentralWidget<QPushButton>(_main_window_widget,"Open Options");
-      QObject::connect(&button,&QPushButton::clicked,
-        [&]{
-          _controller().onOpenOptionsPressed();
-        }
-      );
+      createOpenOptionsButton();
     }
 
-    bool optionsWindowExists() const
+    // MyMainWindow::View implementation
+    ////////////////////////////////////
+
+    bool optionsWindowExists() const override
     {
       return _options_window_ptr != nullptr;
     }
 
-    void createOptionsWindow()
+    void createOptionsWindow() override
     {
       assert(!_options_window_ptr);
       _options_window_ptr = new QtMyOptionsWindow(&_main_window_widget);
@@ -44,15 +40,32 @@ class QtMyMainWindow::QtView : public MyMainWindow::View {
       return *_options_window_ptr;
     }
 
-    void redraw3DWindow() override
+    void redraw3D() override
     {
-      cerr << "Redrawing 3D window\n";
+      cerr << "Redrawing 3D\n";
       cerr << "  label_axes: " << _applicationData().options.label_axes << "\n";
+    }
+
+    void openWindow() override
+    {
+      assert(_options_window_ptr);
+      _options_window_ptr->show();
     }
 
   private:
     QMainWindow &_main_window_widget;
     QtMyOptionsWindow *_options_window_ptr = nullptr;
+
+    void createOpenOptionsButton()
+    {
+      QPushButton &button =
+        createCentralWidget<QPushButton>(_main_window_widget,"Open Options");
+      QObject::connect(&button,&QPushButton::clicked,
+        [&]{
+          _controller().onOpenOptionsPressed();
+        }
+      );
+    }
 };
 
 

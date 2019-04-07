@@ -11,7 +11,7 @@ class MyMainWindow {
     ~MyMainWindow();
 
     void setApplicationDataPtr(ApplicationData *);
-    virtual void open() = 0;
+    void open();
 
   protected:
     class View;

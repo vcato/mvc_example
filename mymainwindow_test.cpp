@@ -14,35 +14,37 @@ namespace {
 class FakeOptionsWindow : public MyOptionsWindow
 {
   public:
-    bool is_open = false;
+    class FakeView : public MyOptionsWindow::View {
+      public:
+        FakeView(FakeOptionsWindow &options_window_arg)
+        : MyOptionsWindow::View(options_window_arg),
+          _options_window(options_window_arg)
+        {
+        }
 
-    struct FakeView : View {
-      FakeView(FakeOptionsWindow &options_window)
-      : View(options_window)
-      {
-      }
+        bool label_axes_state = false;
 
-      bool label_axes_state = false;
+        void setLabelAxesToggleState(bool arg) override
+        {
+          label_axes_state = arg;
+        }
 
-      void setLabelAxesToggleState(bool arg) override
-      {
-        label_axes_state = arg;
-      }
+        bool labelAxesToggleState() const override
+        {
+          return label_axes_state;
+        }
 
-      bool labelAxesToggleState() const override
-      {
-        return label_axes_state;
-      }
+        void openWindow() override
+        {
+          _options_window.is_open = true;
+        }
+
+      private:
+        FakeOptionsWindow &_options_window;
     };
 
-    FakeView view;
-
-    FakeOptionsWindow()
-    : view(*this)
-    {
-    }
-
-    void open() override { is_open = true; }
+    bool is_open = false;
+    FakeView view{*this};
 
     void userTogglesLabelAxes()
     {
@@ -66,14 +68,15 @@ class FakeMainWindow : public MyMainWindow
   public:
     struct FakeView : MyMainWindow::View
     {
-      FakeView(MyMainWindow &main_window)
-      : MyMainWindow::View(main_window)
+      FakeView(FakeMainWindow &main_window)
+      : MyMainWindow::View(main_window),
+        _main_window(main_window)
       {
       }
 
       bool options_window_exists = false;
-      FakeOptionsWindow options_window;
       ostringstream command_stream;
+      FakeMainWindow &_main_window;
 
       bool optionsWindowExists() const override
       {
@@ -87,17 +90,23 @@ class FakeMainWindow : public MyMainWindow
 
       MyOptionsWindow &optionsWindow() override
       {
-        return options_window;
+        return _main_window.options_window;
       }
 
-      void redraw3DWindow() override
+      void redraw3D() override
       {
         bool label_axes = _applicationData().options.label_axes;
-        command_stream << "redraw3DWindow(label_axes=" << label_axes << ")\n";
+        command_stream << "redraw3D(label_axes=" << label_axes << ")\n";
+      }
+
+      void openWindow() override
+      {
+        _main_window.is_open = true;
       }
     };
 
     bool is_open = false;
+    FakeOptionsWindow options_window;
     FakeView view;
 
     FakeMainWindow()
@@ -106,8 +115,6 @@ class FakeMainWindow : public MyMainWindow
     }
 
     MyMainWindow::View &_view() override { return view; }
-
-    void open() override { is_open = true; }
 
     void userPressesOpenOptions()
     {
@@ -130,13 +137,13 @@ class FakeMainWindow : public MyMainWindow
 
     FakeOptionsWindow &optionsWindow()
     {
-      return view.options_window;
+      return options_window;
     }
 };
 }
 
 
-int main()
+static void testTogglingLabelAxes()
 {
   ApplicationData application_data;
   FakeMainWindow main_window;
@@ -146,8 +153,28 @@ int main()
   assert(main_window.optionsWindow().is_open);
   main_window.optionsWindow().userTogglesLabelAxes();
   assert(application_data.options.label_axes == true);
-  main_window.expectCommands("redraw3DWindow(label_axes=1)\n");
+  main_window.expectCommands("redraw3D(label_axes=1)\n");
   main_window.optionsWindow().userTogglesLabelAxes();
   assert(application_data.options.label_axes == false);
-  main_window.expectCommands("redraw3DWindow(label_axes=0)\n");
+  main_window.expectCommands("redraw3D(label_axes=0)\n");
+}
+
+
+static void testOpeningTheOptionsWindowTheLabelAxesAlreadyOn()
+{
+  ApplicationData application_data;
+  FakeMainWindow main_window;
+  main_window.setApplicationDataPtr(&application_data);
+
+  application_data.options.label_axes = true;
+  main_window.open();
+  main_window.userPressesOpenOptions();
+  assert(main_window.optionsWindow().view.label_axes_state == true);
+}
+
+
+int main()
+{
+  testTogglingLabelAxes();
+  testOpeningTheOptionsWindowTheLabelAxesAlreadyOn();
 }

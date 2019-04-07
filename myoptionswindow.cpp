@@ -7,21 +7,6 @@
 using std::cerr;
 
 
-// MyOptionsWindowView
-//////////////////////
-
-MyOptionsWindow::View::View(MyOptionsWindow &options_window)
-: _options_window(options_window)
-{
-}
-
-
-MyOptionsWindow::Controller &MyOptionsWindow::View::_controller()
-{
-  return _options_window._controller();
-}
-
-
 // MyOptionsWindowController
 ////////////////////////////
 
@@ -33,16 +18,16 @@ MyOptionsWindow::Controller::Controller(
 }
 
 
-void MyOptionsWindow::Controller::onLabelAxesToggled()
+void MyOptionsWindow::Controller::onOpenWindow()
 {
-  _options().label_axes = _view().labelAxesToggleState();
-  _client().onOptionsChanged();
+  _updateLabelAxesToggleState();
 }
 
 
-void MyOptionsWindow::Controller::onOptionsChanged()
+void MyOptionsWindow::Controller::onLabelAxesToggled()
 {
-  _view().setLabelAxesToggleState(_options().label_axes);
+  _updateLabelAxesValue();
+  _client().onOptionsChanged();
 }
 
 
@@ -64,6 +49,18 @@ Options &MyOptionsWindow::Controller::_options()
 }
 
 
+void MyOptionsWindow::Controller::_updateLabelAxesToggleState()
+{
+  _view().setLabelAxesToggleState(_options().label_axes);
+}
+
+
+void MyOptionsWindow::Controller::_updateLabelAxesValue()
+{
+  _options().label_axes = _view().labelAxesToggleState();
+}
+
+
 // MyOptionsWindow
 //////////////////
 
@@ -79,7 +76,13 @@ MyOptionsWindow::~MyOptionsWindow() = default;
 void MyOptionsWindow::setClientPtr(Client *arg)
 {
   _client_ptr = arg;
-  _controller().onOptionsChanged();
+}
+
+
+void MyOptionsWindow::open()
+{
+  _view().openWindow();
+  _controller().onOpenWindow();
 }
 
 

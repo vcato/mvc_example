@@ -10,33 +10,56 @@
 class QtMyOptionsWindow::QtView : public MyOptionsWindow::View {
   public:
     QtView(QtMyOptionsWindow &options_window)
-    : MyOptionsWindow::View(options_window)
+    : MyOptionsWindow::View(options_window),
+      _options_window(options_window)
     {
       auto &layout = createLayout<QVBoxLayout>(options_window);
-      QCheckBox &label_axes_toggle =
-        createWidget<QCheckBox>(layout,"Label Axes");
-      _label_axes_toggle_ptr = &label_axes_toggle;
-      QObject::connect(&label_axes_toggle,&QCheckBox::stateChanged,
-        [&]{
-          _controller().onLabelAxesToggled();
-        }
-      );
+      _label_axes_check_box_ptr = &createLabelAxesCheckBox(layout);
     }
 
     void setLabelAxesToggleState(bool arg) override
     {
-      assert(_label_axes_toggle_ptr);
-      _label_axes_toggle_ptr->setChecked(arg);
+      _labelAxesCheckBox().setChecked(arg);
     }
 
     bool labelAxesToggleState() const override
     {
-      assert(_label_axes_toggle_ptr);
-      return _label_axes_toggle_ptr->isChecked();
+      return _labelAxesCheckBox().isChecked();
+    }
+
+    void openWindow() override
+    {
+      _options_window.show();
     }
 
   private:
-    QCheckBox *_label_axes_toggle_ptr = nullptr;
+    QCheckBox *_label_axes_check_box_ptr = nullptr;
+    QtMyOptionsWindow &_options_window;
+
+    QCheckBox& createLabelAxesCheckBox(QLayout &layout)
+    {
+      QCheckBox &label_axes_check_box =
+        createWidget<QCheckBox>(layout,"Label Axes");
+      QObject::connect(&label_axes_check_box,&QCheckBox::stateChanged,
+        [&]{
+          _controller().onLabelAxesToggled();
+        }
+      );
+
+      return label_axes_check_box;
+    }
+
+    QCheckBox &_labelAxesCheckBox()
+    {
+      assert(_label_axes_check_box_ptr);
+      return *_label_axes_check_box_ptr;
+    }
+
+    const QCheckBox &_labelAxesCheckBox() const
+    {
+      assert(_label_axes_check_box_ptr);
+      return *_label_axes_check_box_ptr;
+    }
 };
 
 

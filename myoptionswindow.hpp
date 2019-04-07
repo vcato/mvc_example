@@ -16,7 +16,7 @@ class MyOptionsWindow {
     ~MyOptionsWindow();
 
     void setClientPtr(Client *);
-    virtual void open() = 0;
+    void open();
 
   protected:
     class View;

@@ -5,49 +5,8 @@
 #include "myoptionswindow.hpp"
 
 
-// MyMainWindow::View
-///////////////////
-
-MyMainWindow::View::View(MyMainWindow &main_window)
-: _main_window(main_window)
-{
-}
-
-
-MyMainWindow::Controller &MyMainWindow::View::_controller()
-{
-  return _main_window._controller();
-}
-
-
-ApplicationData &MyMainWindow::View::_applicationData()
-{
-  return _main_window._applicationData();
-}
-
-
 // MyMainWindow::Controller
 /////////////////////////
-
-MyMainWindow::Controller::OptionsWindowClient::OptionsWindowClient(
-  Controller &controller
-)
-: _controller(controller)
-{
-}
-
-
-void MyMainWindow::Controller::OptionsWindowClient::onOptionsChanged()
-{
-  _controller.onOptionsWindowOptionsChanged();
-}
-
-
-Options &MyMainWindow::Controller::OptionsWindowClient::options()
-{
-  return _controller._applicationData().options;
-}
-
 
 MyMainWindow::Controller::Controller(MyMainWindow &main_window)
 : _options_window_client(*this),
@@ -58,32 +17,24 @@ MyMainWindow::Controller::Controller(MyMainWindow &main_window)
 
 void MyMainWindow::Controller::onOpenOptionsPressed()
 {
-  View &view = _view();
-
-  if (!view.optionsWindowExists()) {
-    view.createOptionsWindow();
-    view.optionsWindow().setClientPtr(&_options_window_client);
-  }
-
-  view.optionsWindow().open();
+  _openOptionsWindow();
 }
 
 
 void MyMainWindow::Controller::onOptionsWindowOptionsChanged()
 {
-  _view().redraw3DWindow();
+  _view().redraw3D();
 }
 
 
-MyMainWindow::View &MyMainWindow::Controller::_view()
+void MyMainWindow::Controller::_openOptionsWindow()
 {
-  return _main_window._view();
-}
+  if (!_view().optionsWindowExists()) {
+    _view().createOptionsWindow();
+    _view().optionsWindow().setClientPtr(&_options_window_client);
+  }
 
-
-ApplicationData &MyMainWindow::Controller::_applicationData()
-{
-  return _main_window._applicationData();
+  _view().optionsWindow().open();
 }
 
 
@@ -116,4 +67,10 @@ MyMainWindow::Controller &MyMainWindow::_controller()
 {
   assert(_controller_ptr);
   return *_controller_ptr;
+}
+
+
+void MyMainWindow::open()
+{
+  _view().openWindow();
 }

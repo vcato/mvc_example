@@ -10,8 +10,6 @@ class QtMyOptionsWindow : public QDialog, public MyOptionsWindow {
     QtMyOptionsWindow(QWidget *parent_ptr);
     ~QtMyOptionsWindow();
 
-    void open() override { show(); }
-
   private:
     struct QtView;
     std::unique_ptr<QtView> _view_ptr;

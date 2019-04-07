@@ -5,16 +5,24 @@
 
 class MyMainWindow::View {
   public:
-    View(MyMainWindow &);
+    View(MyMainWindow &main_window) : _main_window(main_window) {}
 
+    virtual void openWindow() = 0;
     virtual bool optionsWindowExists() const = 0;
     virtual void createOptionsWindow() = 0;
     virtual MyOptionsWindow &optionsWindow() = 0;
-    virtual void redraw3DWindow() = 0;
+    virtual void redraw3D() = 0;
 
   protected:
-    ApplicationData &_applicationData();
-    Controller &_controller();
+    ApplicationData &_applicationData()
+    {
+      return _main_window._applicationData();
+    }
+
+    Controller &_controller()
+    {
+      return _main_window._controller();
+    }
 
   private:
     MyMainWindow &_main_window;
@@ -31,10 +39,20 @@ class MyMainWindow::Controller {
   private:
     class OptionsWindowClient : public MyOptionsWindow::Client {
       public:
-        OptionsWindowClient(Controller &);
+        OptionsWindowClient(Controller &controller)
+        : _controller(controller)
+        {
+        }
 
-        void onOptionsChanged() override;
-        Options &options() override;
+        void onOptionsChanged() override
+        {
+          _controller.onOptionsWindowOptionsChanged();
+        }
+
+        Options &options() override
+        {
+          return _controller._applicationData().options;
+        }
 
       private:
         Controller &_controller;
@@ -43,6 +61,15 @@ class MyMainWindow::Controller {
     OptionsWindowClient _options_window_client;
     MyMainWindow &_main_window;
 
-    ApplicationData &_applicationData();
-    View &_view();
+    ApplicationData &_applicationData()
+    {
+      return _main_window._applicationData();
+    }
+
+    View &_view()
+    {
+      return _main_window._view();
+    }
+
+    void _openOptionsWindow();
 };

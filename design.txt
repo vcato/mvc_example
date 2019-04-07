@@ -1,0 +1,16 @@
+mymainwindow.cpp
+* Controller
+  * When the user presses the "Open Options" button:
+    * open the options window.
+  * When the options window says the options have changed
+    * redraw the 3D view.
+
+myoptionswindow.cpp
+* Controller
+  * When the window is opened
+    * Update the Label Axes checkbox to match the label_axes value in
+      the options.
+  * When the user toggles the Label Axes checkbox: 
+    * update the label_axes value in the options to match the state of the
+      Label Axes checkbox.
+    * notify the client that the options have changed.

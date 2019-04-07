@@ -8,8 +8,6 @@ class QtMyMainWindow : public QMainWindow, public MyMainWindow
     QtMyMainWindow();
     ~QtMyMainWindow();
 
-    void open() override { show(); }
-
   private:
     struct QtView;
     std::unique_ptr<QtView> _view_ptr;
