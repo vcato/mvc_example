@@ -30,19 +30,13 @@ void MyMainWindow::_controllerOpenOptionsWindow()
 }
 
 
-// private methods
+// protected methods
 //////////////////
 
 ApplicationData &MyMainWindow::_applicationData()
 {
   assert(_application_data_ptr);
   return *_application_data_ptr;
-}
-
-
-void MyMainWindow::open()
-{
-  viewOpenWindow();
 }
 
 
@@ -61,4 +55,10 @@ MyMainWindow::~MyMainWindow() = default;
 void MyMainWindow::setApplicationDataPtr(ApplicationData *arg)
 {
   _application_data_ptr = arg;
+}
+
+
+void MyMainWindow::open()
+{
+  viewOpenWindow();
 }
