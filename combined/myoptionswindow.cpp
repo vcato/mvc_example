@@ -6,7 +6,7 @@
 using std::cerr;
 
 
-// MyOptionsWindowController
+// Controller
 ////////////////////////////
 
 void MyOptionsWindow::controllerOnOpenWindow()
@@ -34,7 +34,23 @@ void MyOptionsWindow::_controllerUpdateLabelAxesValue()
 }
 
 
-// MyOptionsWindow
+// private methods
+//////////////////
+
+MyOptionsWindow::Client &MyOptionsWindow::_client()
+{
+  assert(_client_ptr);
+  return *_client_ptr;
+}
+
+
+Options &MyOptionsWindow::_options()
+{
+  return _client().options();
+}
+
+
+// public methods
 //////////////////
 
 MyOptionsWindow::MyOptionsWindow() = default;
@@ -53,17 +69,4 @@ void MyOptionsWindow::open()
 {
   viewOpenWindow();
   controllerOnOpenWindow();
-}
-
-
-MyOptionsWindow::Client &MyOptionsWindow::_client()
-{
-  assert(_client_ptr);
-  return *_client_ptr;
-}
-
-
-Options &MyOptionsWindow::_options()
-{
-  return _client().options();
 }

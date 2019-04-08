@@ -4,7 +4,7 @@
 #include "myoptionswindow.hpp"
 
 
-// MyMainWindow::Controller
+// Controller
 /////////////////////////
 
 void MyMainWindow::controllerOnOpenOptionsPressed()
@@ -30,8 +30,24 @@ void MyMainWindow::_controllerOpenOptionsWindow()
 }
 
 
-// MyMainWindow
-///////////////
+// private methods
+//////////////////
+
+ApplicationData &MyMainWindow::_applicationData()
+{
+  assert(_application_data_ptr);
+  return *_application_data_ptr;
+}
+
+
+void MyMainWindow::open()
+{
+  viewOpenWindow();
+}
+
+
+// public methods
+/////////////////
 
 MyMainWindow::MyMainWindow()
 : _options_window_client(*this)
@@ -45,18 +61,4 @@ MyMainWindow::~MyMainWindow() = default;
 void MyMainWindow::setApplicationDataPtr(ApplicationData *arg)
 {
   _application_data_ptr = arg;
-}
-
-
-ApplicationData &MyMainWindow::_applicationData()
-{
-  assert(_application_data_ptr);
-  return *_application_data_ptr;
-}
-
-
-void MyMainWindow::open()
-{
-  // _view().viewOpenWindow();
-  viewOpenWindow();
 }
