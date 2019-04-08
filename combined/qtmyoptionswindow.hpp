@@ -17,7 +17,7 @@ class QtMyOptionsWindow : public QDialog, public MyOptionsWindow {
     void viewSetLabelAxesToggleState(bool arg) override;
 
   private:
-    QCheckBox *_label_axes_check_box_ptr = nullptr;
+    QCheckBox *_view_label_axes_check_box_ptr = nullptr;
 
     QCheckBox& viewCreateLabelAxesCheckBox(QLayout &layout);
     QCheckBox &_viewLabelAxesCheckBox() const;

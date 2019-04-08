@@ -26,8 +26,8 @@ void QtMyOptionsWindow::viewSetLabelAxesToggleState(bool arg)
 
 QCheckBox &QtMyOptionsWindow::_viewLabelAxesCheckBox() const
 {
-  assert(_label_axes_check_box_ptr);
-  return *_label_axes_check_box_ptr;
+  assert(_view_label_axes_check_box_ptr);
+  return *_view_label_axes_check_box_ptr;
 }
 
 
@@ -49,7 +49,7 @@ QtMyOptionsWindow::QtMyOptionsWindow(QWidget *parent_ptr)
 : QDialog(parent_ptr)
 {
   auto &layout = createLayout<QVBoxLayout>(*this);
-  _label_axes_check_box_ptr = &viewCreateLabelAxesCheckBox(layout);
+  _view_label_axes_check_box_ptr = &viewCreateLabelAxesCheckBox(layout);
 }
 
 
