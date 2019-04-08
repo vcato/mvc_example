@@ -48,8 +48,7 @@ class QtMyMainWindow::QtView : public MyMainWindow::View {
 
     void openWindow() override
     {
-      assert(_options_window_ptr);
-      _options_window_ptr->show();
+      _main_window_widget.show();
     }
 
   private:
