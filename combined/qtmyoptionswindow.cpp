@@ -33,12 +33,12 @@ QCheckBox &QtMyOptionsWindow::_viewLabelAxesCheckBox() const
 
 QCheckBox& QtMyOptionsWindow::viewCreateLabelAxesCheckBox(QLayout &layout)
 {
-  QCheckBox &label_axes_check_box =
-    createWidget<QCheckBox>(layout,"Label Axes");
-  QObject::connect(&label_axes_check_box,&QCheckBox::stateChanged,
-    [&]{
-      controllerOnLabelAxesToggled();
-    }
+  auto &label_axes_check_box = createWidget<QCheckBox>(layout,"Label Axes");
+
+  QObject::connect(
+    &label_axes_check_box,
+    &QCheckBox::stateChanged,
+    [this]{ controllerOnLabelAxesToggled(); }
   );
 
   return label_axes_check_box;

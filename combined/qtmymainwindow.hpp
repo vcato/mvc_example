@@ -1,3 +1,7 @@
+#ifndef QTMYMAINWINDOW_HPP_
+#define QTMYMAINWINDOW_HPP_
+
+
 #include <QMainWindow>
 #include "mymainwindow.hpp"
 #include "qtmyoptionswindow.hpp"
@@ -21,3 +25,6 @@ class QtMyMainWindow : public QMainWindow, public MyMainWindow
 
     void _viewCreateOpenOptionsButton();
 };
+
+
+#endif /* QTMYMAINWINDOW_HPP_ */

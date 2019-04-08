@@ -48,12 +48,12 @@ void QtMyMainWindow::viewRedraw3D()
 
 void QtMyMainWindow::_viewCreateOpenOptionsButton()
 {
-  QPushButton &button =
-    createCentralWidget<QPushButton>(*this,"Open Options");
-  QObject::connect(&button,&QPushButton::clicked,
-    [&]{
-      controllerOnOpenOptionsPressed();
-    }
+  auto &button = createCentralWidget<QPushButton>(*this,"Open Options");
+
+  QObject::connect(
+    &button,
+    &QPushButton::clicked,
+    [this]{ controllerOnOpenOptionsPressed(); }
   );
 }
 

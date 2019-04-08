@@ -1,5 +1,5 @@
-#ifndef OPTIONSWINDOW_HPP_
-#define OPTIONSWINDOW_HPP_
+#ifndef MYOPTIONSWINDOW_HPP_
+#define MYOPTIONSWINDOW_HPP_
 
 #include <memory>
 #include "options.hpp"
@@ -38,4 +38,4 @@ class MyOptionsWindow {
 };
 
 
-#endif /* OPTIONSWINDOW_HPP_ */
+#endif /* MYOPTIONSWINDOW_HPP_ */
