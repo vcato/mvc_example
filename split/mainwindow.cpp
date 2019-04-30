@@ -1,33 +1,33 @@
-#include "mymainwindow.hpp"
-#include "mymainwindowimpl.hpp"
+#include "mainwindow.hpp"
+#include "mainwindowimpl.hpp"
 
 #include <cassert>
 #include "optionswindow.hpp"
 
 
-// MyMainWindow::Controller
+// MainWindow::Controller
 /////////////////////////
 
-MyMainWindow::Controller::Controller(MyMainWindow &main_window)
+MainWindow::Controller::Controller(MainWindow &main_window)
 : _options_window_client(*this),
   _main_window(main_window)
 {
 }
 
 
-void MyMainWindow::Controller::onOpenOptionsPressed()
+void MainWindow::Controller::onOpenOptionsPressed()
 {
   _openOptionsWindow();
 }
 
 
-void MyMainWindow::Controller::onOptionsWindowOptionsChanged()
+void MainWindow::Controller::onOptionsWindowOptionsChanged()
 {
   _view().redraw3D();
 }
 
 
-void MyMainWindow::Controller::_openOptionsWindow()
+void MainWindow::Controller::_openOptionsWindow()
 {
   if (!_view().optionsWindowExists()) {
     _view().createOptionsWindow();
@@ -38,39 +38,39 @@ void MyMainWindow::Controller::_openOptionsWindow()
 }
 
 
-// MyMainWindow
+// MainWindow
 ///////////////
 
-MyMainWindow::MyMainWindow()
+MainWindow::MainWindow()
 : _controller_ptr(std::make_unique<Controller>(*this))
 {
 }
 
 
-MyMainWindow::~MyMainWindow() = default;
+MainWindow::~MainWindow() = default;
 
 
-void MyMainWindow::setApplicationDataPtr(ApplicationData *arg)
+void MainWindow::setApplicationDataPtr(ApplicationData *arg)
 {
   _application_data_ptr = arg;
 }
 
 
-ApplicationData &MyMainWindow::_applicationData()
+ApplicationData &MainWindow::_applicationData()
 {
   assert(_application_data_ptr);
   return *_application_data_ptr;
 }
 
 
-MyMainWindow::Controller &MyMainWindow::_controller()
+MainWindow::Controller &MainWindow::_controller()
 {
   assert(_controller_ptr);
   return *_controller_ptr;
 }
 
 
-void MyMainWindow::open()
+void MainWindow::open()
 {
   _view().openWindow();
 }

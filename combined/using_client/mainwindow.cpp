@@ -1,4 +1,4 @@
-#include "mymainwindow.hpp"
+#include "mainwindow.hpp"
 
 #include <cassert>
 #include "optionswindow.hpp"
@@ -7,19 +7,19 @@
 // Controller
 /////////////////////////
 
-void MyMainWindow::controllerOnOpenOptionsPressed()
+void MainWindow::controllerOnOpenOptionsPressed()
 {
   _controllerOpenOptionsWindow();
 }
 
 
-void MyMainWindow::controllerOnOptionsWindowOptionsChanged()
+void MainWindow::controllerOnOptionsWindowOptionsChanged()
 {
   viewRedraw3D();
 }
 
 
-void MyMainWindow::_controllerOpenOptionsWindow()
+void MainWindow::_controllerOpenOptionsWindow()
 {
   if (!viewOptionsWindowExists()) {
     viewCreateOptionsWindow();
@@ -33,7 +33,7 @@ void MyMainWindow::_controllerOpenOptionsWindow()
 // protected methods
 //////////////////
 
-ApplicationData &MyMainWindow::_applicationData()
+ApplicationData &MainWindow::_applicationData()
 {
   assert(_application_data_ptr);
   return *_application_data_ptr;
@@ -43,22 +43,22 @@ ApplicationData &MyMainWindow::_applicationData()
 // public methods
 /////////////////
 
-MyMainWindow::MyMainWindow()
+MainWindow::MainWindow()
 : _options_window_client(*this)
 {
 }
 
 
-MyMainWindow::~MyMainWindow() = default;
+MainWindow::~MainWindow() = default;
 
 
-void MyMainWindow::setApplicationDataPtr(ApplicationData *arg)
+void MainWindow::setApplicationDataPtr(ApplicationData *arg)
 {
   _application_data_ptr = arg;
 }
 
 
-void MyMainWindow::open()
+void MainWindow::open()
 {
   viewOpenWindow();
 }

@@ -1,5 +1,5 @@
-#include "qtmymainwindow.hpp"
-#include "mymainwindowimpl.hpp"
+#include "qtmainwindow.hpp"
+#include "mainwindowimpl.hpp"
 
 #include <iostream>
 #include <cassert>
@@ -11,16 +11,16 @@
 using std::cerr;
 
 
-class QtMyMainWindow::QtView : public MyMainWindow::View {
+class QtMainWindow::QtView : public MainWindow::View {
   public:
-    QtView(QtMyMainWindow &main_window)
-    : MyMainWindow::View(main_window),
+    QtView(QtMainWindow &main_window)
+    : MainWindow::View(main_window),
       _main_window_widget(main_window)
     {
       createOpenOptionsButton();
     }
 
-    // MyMainWindow::View implementation
+    // MainWindow::View implementation
     ////////////////////////////////////
 
     bool optionsWindowExists() const override
@@ -68,16 +68,16 @@ class QtMyMainWindow::QtView : public MyMainWindow::View {
 };
 
 
-QtMyMainWindow::QtMyMainWindow()
+QtMainWindow::QtMainWindow()
 : _view_ptr{std::make_unique<QtView>(*this)}
 {
 }
 
 
-QtMyMainWindow::~QtMyMainWindow() = default;
+QtMainWindow::~QtMainWindow() = default;
 
 
-MyMainWindow::View &QtMyMainWindow::_view()
+MainWindow::View &QtMainWindow::_view()
 {
   assert(_view_ptr);
   return *_view_ptr;

@@ -2,4 +2,4 @@
 *.o
 *.pass
 main
-mymainwindow_test
+mainwindow_test

@@ -1,17 +1,17 @@
-#ifndef QTMYMAINWINDOW_HPP_
-#define QTMYMAINWINDOW_HPP_
+#ifndef QTMAINWINDOW_HPP_
+#define QTMAINWINDOW_HPP_
 
 
 #include <QMainWindow>
-#include "mymainwindow.hpp"
+#include "mainwindow.hpp"
 #include "qtoptionswindow.hpp"
 
 
-class QtMyMainWindow : public QMainWindow, public MyMainWindow
+class QtMainWindow : public QMainWindow, public MainWindow
 {
   public:
-    QtMyMainWindow();
-    ~QtMyMainWindow();
+    QtMainWindow();
+    ~QtMainWindow();
 
   private: // View implementation
     void viewOpenWindow() override;
@@ -27,4 +27,4 @@ class QtMyMainWindow : public QMainWindow, public MyMainWindow
 };
 
 
-#endif /* QTMYMAINWINDOW_HPP_ */
+#endif /* QTMAINWINDOW_HPP_ */

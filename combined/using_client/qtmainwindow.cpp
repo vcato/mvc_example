@@ -1,4 +1,4 @@
-#include "qtmymainwindow.hpp"
+#include "qtmainwindow.hpp"
 
 #include <iostream>
 #include <cassert>
@@ -13,40 +13,40 @@ using std::cerr;
 // View methods
 ////////////////
 
-void QtMyMainWindow::viewOpenWindow()
+void QtMainWindow::viewOpenWindow()
 {
   show();
 }
 
 
-bool QtMyMainWindow::viewOptionsWindowExists() const
+bool QtMainWindow::viewOptionsWindowExists() const
 {
   return _options_window_ptr != nullptr;
 }
 
 
-void QtMyMainWindow::viewCreateOptionsWindow()
+void QtMainWindow::viewCreateOptionsWindow()
 {
   assert(!_options_window_ptr);
   _options_window_ptr = new QtOptionsWindow(this);
 }
 
 
-OptionsWindow &QtMyMainWindow::viewOptionsWindow()
+OptionsWindow &QtMainWindow::viewOptionsWindow()
 {
   assert(_options_window_ptr);
   return *_options_window_ptr;
 }
 
 
-void QtMyMainWindow::viewRedraw3D()
+void QtMainWindow::viewRedraw3D()
 {
   cerr << "Redrawing 3D\n";
   cerr << "  label_axes: " << _applicationData().options.label_axes << "\n";
 }
 
 
-void QtMyMainWindow::_viewCreateOpenOptionsButton()
+void QtMainWindow::_viewCreateOpenOptionsButton()
 {
   auto &button = createCentralWidget<QPushButton>(*this,"Open Options");
 
@@ -61,10 +61,10 @@ void QtMyMainWindow::_viewCreateOpenOptionsButton()
 // Public methods
 /////////////////
 
-QtMyMainWindow::QtMyMainWindow()
+QtMainWindow::QtMainWindow()
 {
   _viewCreateOpenOptionsButton();
 }
 
 
-QtMyMainWindow::~QtMyMainWindow() = default;
+QtMainWindow::~QtMainWindow() = default;

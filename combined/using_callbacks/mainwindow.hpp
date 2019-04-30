@@ -1,15 +1,15 @@
-#ifndef MYMAINWINDOW_HPP_
-#define MYMAINWINDOW_HPP_
+#ifndef MAINWINDOW_HPP_
+#define MAINWINDOW_HPP_
 
 #include <memory>
 #include "applicationdata.hpp"
 #include "optionswindow.hpp"
 
 
-class MyMainWindow {
+class MainWindow {
   public:
-    MyMainWindow();
-    ~MyMainWindow();
+    MainWindow();
+    ~MainWindow();
 
     void setApplicationDataPtr(ApplicationData *);
     void open();
@@ -29,32 +29,10 @@ class MyMainWindow {
     virtual void viewRedraw3D() = 0;
 
   private:
-    class OptionsWindowClient : public OptionsWindow::Client {
-      public:
-        OptionsWindowClient(MyMainWindow &main_window)
-        : _main_window(main_window)
-        {
-        }
-
-        void onOptionsChanged() override
-        {
-          _main_window.controllerOnOptionsWindowOptionsChanged();
-        }
-
-        Options &options() override
-        {
-          return _main_window._applicationData().options;
-        }
-
-      private:
-        MyMainWindow &_main_window;
-    };
-
-    OptionsWindowClient _options_window_client;
     ApplicationData *_application_data_ptr = nullptr;
 
     void _controllerOpenOptionsWindow();
 };
 
 
-#endif /* MYMAINWINDOW_HPP_ */
+#endif /* MAINWINDOW_HPP_ */

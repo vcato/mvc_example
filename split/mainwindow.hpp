@@ -1,14 +1,14 @@
-#ifndef MYMAINWINDOW_HPP_
-#define MYMAINWINDOW_HPP_
+#ifndef MAINWINDOW_HPP_
+#define MAINWINDOW_HPP_
 
 #include <memory>
 #include "applicationdata.hpp"
 
 
-class MyMainWindow {
+class MainWindow {
   public:
-    MyMainWindow();
-    ~MyMainWindow();
+    MainWindow();
+    ~MainWindow();
 
     void setApplicationDataPtr(ApplicationData *);
     void open();
@@ -28,4 +28,4 @@ class MyMainWindow {
 };
 
 
-#endif /* MYMAINWINDOW_HPP_ */
+#endif /* MAINWINDOW_HPP_ */

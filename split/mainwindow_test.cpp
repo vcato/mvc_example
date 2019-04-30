@@ -1,8 +1,8 @@
-#include "mymainwindow.hpp"
+#include "mainwindow.hpp"
 
 #include <cassert>
 #include <sstream>
-#include "mymainwindowimpl.hpp"
+#include "mainwindowimpl.hpp"
 #include "optionswindow.hpp"
 #include "optionswindowimpl.hpp"
 
@@ -63,13 +63,13 @@ class FakeOptionsWindow : public OptionsWindow
 
 
 namespace {
-class FakeMainWindow : public MyMainWindow
+class FakeMainWindow : public MainWindow
 {
   public:
-    struct FakeView : MyMainWindow::View
+    struct FakeView : MainWindow::View
     {
       FakeView(FakeMainWindow &main_window)
-      : MyMainWindow::View(main_window),
+      : MainWindow::View(main_window),
         _main_window(main_window)
       {
       }
@@ -114,7 +114,7 @@ class FakeMainWindow : public MyMainWindow
     {
     }
 
-    MyMainWindow::View &_view() override { return view; }
+    MainWindow::View &_view() override { return view; }
 
     void userPressesOpenOptions()
     {

@@ -1,4 +1,4 @@
-#include "mymainwindow.hpp"
+#include "mainwindow.hpp"
 
 #include <cassert>
 #include <sstream>
@@ -42,7 +42,7 @@ class FakeOptionsWindow : public OptionsWindow
 
 
 namespace {
-class FakeMainWindow : public MyMainWindow
+class FakeMainWindow : public MainWindow
 {
   public:
     bool is_open = false;

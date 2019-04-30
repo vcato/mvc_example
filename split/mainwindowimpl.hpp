@@ -1,11 +1,11 @@
-#include "mymainwindow.hpp"
+#include "mainwindow.hpp"
 #include "applicationdata.hpp"
 #include "optionswindow.hpp"
 
 
-class MyMainWindow::View {
+class MainWindow::View {
   public:
-    View(MyMainWindow &main_window) : _main_window(main_window) {}
+    View(MainWindow &main_window) : _main_window(main_window) {}
 
     virtual void openWindow() = 0;
     virtual bool optionsWindowExists() const = 0;
@@ -25,13 +25,13 @@ class MyMainWindow::View {
     }
 
   private:
-    MyMainWindow &_main_window;
+    MainWindow &_main_window;
 };
 
 
-class MyMainWindow::Controller {
+class MainWindow::Controller {
   public:
-    Controller(MyMainWindow &);
+    Controller(MainWindow &);
 
     void onOpenOptionsPressed();
     void onOptionsWindowOptionsChanged();
@@ -59,7 +59,7 @@ class MyMainWindow::Controller {
     };
 
     OptionsWindowClient _options_window_client;
-    MyMainWindow &_main_window;
+    MainWindow &_main_window;
 
     ApplicationData &_applicationData()
     {
