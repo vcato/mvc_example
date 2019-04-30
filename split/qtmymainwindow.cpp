@@ -5,7 +5,7 @@
 #include <cassert>
 #include <QPushButton>
 #include <QMainWindow>
-#include "qtmyoptionswindow.hpp"
+#include "qtoptionswindow.hpp"
 #include "widgetutil.hpp"
 
 using std::cerr;
@@ -31,10 +31,10 @@ class QtMyMainWindow::QtView : public MyMainWindow::View {
     void createOptionsWindow() override
     {
       assert(!_options_window_ptr);
-      _options_window_ptr = new QtMyOptionsWindow(&_main_window_widget);
+      _options_window_ptr = new QtOptionsWindow(&_main_window_widget);
     }
 
-    MyOptionsWindow &optionsWindow() override
+    OptionsWindow &optionsWindow() override
     {
       assert(_options_window_ptr);
       return *_options_window_ptr;
@@ -53,7 +53,7 @@ class QtMyMainWindow::QtView : public MyMainWindow::View {
 
   private:
     QMainWindow &_main_window_widget;
-    QtMyOptionsWindow *_options_window_ptr = nullptr;
+    QtOptionsWindow *_options_window_ptr = nullptr;
 
     void createOpenOptionsButton()
     {

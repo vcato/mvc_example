@@ -2,13 +2,13 @@
 #define QTOPTIONSWINDOW_HPP_
 
 #include <QDialog>
-#include "myoptionswindow.hpp"
+#include "optionswindow.hpp"
 
 
-class QtMyOptionsWindow : public QDialog, public MyOptionsWindow {
+class QtOptionsWindow : public QDialog, public OptionsWindow {
   public:
-    QtMyOptionsWindow(QWidget *parent_ptr);
-    ~QtMyOptionsWindow();
+    QtOptionsWindow(QWidget *parent_ptr);
+    ~QtOptionsWindow();
 
   private:
     struct QtView;

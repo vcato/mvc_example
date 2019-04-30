@@ -3,7 +3,7 @@
 
 #include <memory>
 #include "applicationdata.hpp"
-#include "myoptionswindow.hpp"
+#include "optionswindow.hpp"
 
 
 class MyMainWindow {
@@ -25,11 +25,11 @@ class MyMainWindow {
     virtual void viewOpenWindow() = 0;
     virtual bool viewOptionsWindowExists() const = 0;
     virtual void viewCreateOptionsWindow() = 0;
-    virtual MyOptionsWindow &viewOptionsWindow() = 0;
+    virtual OptionsWindow &viewOptionsWindow() = 0;
     virtual void viewRedraw3D() = 0;
 
   private:
-    class OptionsWindowClient : public MyOptionsWindow::Client {
+    class OptionsWindowClient : public OptionsWindow::Client {
       public:
         OptionsWindowClient(MyMainWindow &main_window)
         : _main_window(main_window)

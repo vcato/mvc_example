@@ -3,13 +3,13 @@
 
 #include <QDialog>
 #include <QCheckBox>
-#include "myoptionswindow.hpp"
+#include "optionswindow.hpp"
 
 
-class QtMyOptionsWindow : public QDialog, public MyOptionsWindow {
+class QtOptionsWindow : public QDialog, public OptionsWindow {
   public:
-    QtMyOptionsWindow(QWidget *parent_ptr);
-    ~QtMyOptionsWindow();
+    QtOptionsWindow(QWidget *parent_ptr);
+    ~QtOptionsWindow();
 
   private: // View implementation
     void viewOpenWindow() override;

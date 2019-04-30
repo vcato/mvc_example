@@ -2,7 +2,7 @@
 #include "mymainwindowimpl.hpp"
 
 #include <cassert>
-#include "myoptionswindow.hpp"
+#include "optionswindow.hpp"
 
 
 // MyMainWindow::Controller

@@ -1,5 +1,5 @@
-#include "qtmyoptionswindow.hpp"
-#include "myoptionswindowimpl.hpp"
+#include "qtoptionswindow.hpp"
+#include "optionswindowimpl.hpp"
 
 #include <cassert>
 #include <QCheckBox>
@@ -7,10 +7,10 @@
 #include "widgetutil.hpp"
 
 
-class QtMyOptionsWindow::QtView : public MyOptionsWindow::View {
+class QtOptionsWindow::QtView : public OptionsWindow::View {
   public:
-    QtView(QtMyOptionsWindow &options_window)
-    : MyOptionsWindow::View(options_window),
+    QtView(QtOptionsWindow &options_window)
+    : OptionsWindow::View(options_window),
       _options_window(options_window)
     {
       auto &layout = createLayout<QVBoxLayout>(options_window);
@@ -34,7 +34,7 @@ class QtMyOptionsWindow::QtView : public MyOptionsWindow::View {
 
   private:
     QCheckBox *_label_axes_check_box_ptr = nullptr;
-    QtMyOptionsWindow &_options_window;
+    QtOptionsWindow &_options_window;
 
     QCheckBox& createLabelAxesCheckBox(QLayout &layout)
     {
@@ -63,17 +63,17 @@ class QtMyOptionsWindow::QtView : public MyOptionsWindow::View {
 };
 
 
-QtMyOptionsWindow::QtMyOptionsWindow(QWidget *parent_ptr)
+QtOptionsWindow::QtOptionsWindow(QWidget *parent_ptr)
 : QDialog(parent_ptr),
   _view_ptr(std::make_unique<QtView>(*this))
 {
 }
 
 
-QtMyOptionsWindow::~QtMyOptionsWindow() = default;
+QtOptionsWindow::~QtOptionsWindow() = default;
 
 
-MyOptionsWindow::View &QtMyOptionsWindow::_view()
+OptionsWindow::View &QtOptionsWindow::_view()
 {
   assert(_view_ptr);
   return *_view_ptr;

@@ -1,19 +1,22 @@
-#ifndef MYOPTIONSWINDOW_HPP_
-#define MYOPTIONSWINDOW_HPP_
+#ifndef OPTIONSWINDOW_HPP_
+#define OPTIONSWINDOW_HPP_
 
 #include <memory>
 #include "options.hpp"
 
 
-class MyOptionsWindow {
+class OptionsWindow {
   public:
-    MyOptionsWindow();
-    ~MyOptionsWindow();
+    struct Client {
+      virtual void onOptionsChanged() = 0;
+      virtual Options &options() = 0;
+    };
 
+    OptionsWindow();
+    ~OptionsWindow();
+
+    void setClientPtr(Client *);
     void open();
-
-    std::function<void()> options_changed_callback;
-    std::function<Options&()> options_callback;
 
   protected: // Controller methods
     void controllerOnLabelAxesToggled();
@@ -25,11 +28,14 @@ class MyOptionsWindow {
     virtual void viewSetLabelAxesToggleState(bool) = 0;
 
   private:
+    Client *_client_ptr = nullptr;
+
     Options &_options();
+    Client &_client();
 
     void _controllerUpdateLabelAxesToggleState();
     void _controllerUpdateLabelAxesValue();
 };
 
 
-#endif /* MYOPTIONSWINDOW_HPP_ */
+#endif /* OPTIONSWINDOW_HPP_ */

@@ -4,7 +4,7 @@
 #include <cassert>
 #include <QPushButton>
 #include <QMainWindow>
-#include "qtmyoptionswindow.hpp"
+#include "qtoptionswindow.hpp"
 #include "widgetutil.hpp"
 
 using std::cerr;
@@ -28,11 +28,11 @@ bool QtMyMainWindow::viewOptionsWindowExists() const
 void QtMyMainWindow::viewCreateOptionsWindow()
 {
   assert(!_options_window_ptr);
-  _options_window_ptr = new QtMyOptionsWindow(this);
+  _options_window_ptr = new QtOptionsWindow(this);
 }
 
 
-MyOptionsWindow &QtMyMainWindow::viewOptionsWindow()
+OptionsWindow &QtMyMainWindow::viewOptionsWindow()
 {
   assert(_options_window_ptr);
   return *_options_window_ptr;

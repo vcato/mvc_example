@@ -1,4 +1,4 @@
-#include "myoptionswindow.hpp"
+#include "optionswindow.hpp"
 
 #include <cassert>
 #include <iostream>
@@ -9,13 +9,13 @@ using std::cerr;
 // Controller
 ////////////////////////////
 
-void MyOptionsWindow::controllerOnOpenWindow()
+void OptionsWindow::controllerOnOpenWindow()
 {
   _controllerUpdateLabelAxesToggleState();
 }
 
 
-void MyOptionsWindow::controllerOnLabelAxesToggled()
+void OptionsWindow::controllerOnLabelAxesToggled()
 {
   _controllerUpdateLabelAxesValue();
   assert(options_changed_callback);
@@ -23,13 +23,13 @@ void MyOptionsWindow::controllerOnLabelAxesToggled()
 }
 
 
-void MyOptionsWindow::_controllerUpdateLabelAxesToggleState()
+void OptionsWindow::_controllerUpdateLabelAxesToggleState()
 {
   viewSetLabelAxesToggleState(_options().label_axes);
 }
 
 
-void MyOptionsWindow::_controllerUpdateLabelAxesValue()
+void OptionsWindow::_controllerUpdateLabelAxesValue()
 {
   _options().label_axes = viewLabelAxesToggleState();
 }
@@ -39,7 +39,7 @@ void MyOptionsWindow::_controllerUpdateLabelAxesValue()
 //////////////////
 
 
-Options &MyOptionsWindow::_options()
+Options &OptionsWindow::_options()
 {
   assert(options_callback);
   return options_callback();
@@ -49,13 +49,13 @@ Options &MyOptionsWindow::_options()
 // public methods
 //////////////////
 
-MyOptionsWindow::MyOptionsWindow() = default;
+OptionsWindow::OptionsWindow() = default;
 
 
-MyOptionsWindow::~MyOptionsWindow() = default;
+OptionsWindow::~OptionsWindow() = default;
 
 
-void MyOptionsWindow::open()
+void OptionsWindow::open()
 {
   viewOpenWindow();
   controllerOnOpenWindow();

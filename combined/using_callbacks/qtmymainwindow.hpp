@@ -4,7 +4,7 @@
 
 #include <QMainWindow>
 #include "mymainwindow.hpp"
-#include "qtmyoptionswindow.hpp"
+#include "qtoptionswindow.hpp"
 
 
 class QtMyMainWindow : public QMainWindow, public MyMainWindow
@@ -17,11 +17,11 @@ class QtMyMainWindow : public QMainWindow, public MyMainWindow
     void viewOpenWindow() override;
     bool viewOptionsWindowExists() const override;
     void viewCreateOptionsWindow() override;
-    MyOptionsWindow &viewOptionsWindow() override;
+    OptionsWindow &viewOptionsWindow() override;
     void viewRedraw3D() override;
 
   private:
-    QtMyOptionsWindow *_options_window_ptr = nullptr;
+    QtOptionsWindow *_options_window_ptr = nullptr;
 
     void _viewCreateOpenOptionsButton();
 };

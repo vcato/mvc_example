@@ -5,15 +5,15 @@
 #include "options.hpp"
 
 
-class MyOptionsWindow {
+class OptionsWindow {
   public:
     struct Client {
       virtual void onOptionsChanged() = 0;
       virtual Options &options() = 0;
     };
 
-    MyOptionsWindow();
-    ~MyOptionsWindow();
+    OptionsWindow();
+    ~OptionsWindow();
 
     void setClientPtr(Client *);
     void open();

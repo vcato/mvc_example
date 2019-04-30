@@ -2,14 +2,14 @@
 
 #include <cassert>
 #include <sstream>
-#include "myoptionswindow.hpp"
+#include "optionswindow.hpp"
 
 using std::ostringstream;
 using std::string;
 
 
 namespace {
-class FakeOptionsWindow : public MyOptionsWindow
+class FakeOptionsWindow : public OptionsWindow
 {
   public:
     bool is_open = false;
@@ -78,7 +78,7 @@ class FakeMainWindow : public MyMainWindow
       options_window_exists = true;
     }
 
-    MyOptionsWindow &viewOptionsWindow() override
+    OptionsWindow &viewOptionsWindow() override
     {
       return options_window;
     }

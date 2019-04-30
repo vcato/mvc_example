@@ -1,4 +1,4 @@
-#include "qtmyoptionswindow.hpp"
+#include "qtoptionswindow.hpp"
 
 #include <cassert>
 #include <QCheckBox>
@@ -6,32 +6,32 @@
 #include "widgetutil.hpp"
 
 
-void QtMyOptionsWindow::viewOpenWindow()
+void QtOptionsWindow::viewOpenWindow()
 {
   show();
 }
 
 
-bool QtMyOptionsWindow::viewLabelAxesToggleState() const
+bool QtOptionsWindow::viewLabelAxesToggleState() const
 {
   return _viewLabelAxesCheckBox().isChecked();
 }
 
 
-void QtMyOptionsWindow::viewSetLabelAxesToggleState(bool arg)
+void QtOptionsWindow::viewSetLabelAxesToggleState(bool arg)
 {
   _viewLabelAxesCheckBox().setChecked(arg);
 }
 
 
-QCheckBox &QtMyOptionsWindow::_viewLabelAxesCheckBox() const
+QCheckBox &QtOptionsWindow::_viewLabelAxesCheckBox() const
 {
   assert(_view_label_axes_check_box_ptr);
   return *_view_label_axes_check_box_ptr;
 }
 
 
-QCheckBox& QtMyOptionsWindow::viewCreateLabelAxesCheckBox(QLayout &layout)
+QCheckBox& QtOptionsWindow::viewCreateLabelAxesCheckBox(QLayout &layout)
 {
   auto &label_axes_check_box = createWidget<QCheckBox>(layout,"Label Axes");
 
@@ -45,7 +45,7 @@ QCheckBox& QtMyOptionsWindow::viewCreateLabelAxesCheckBox(QLayout &layout)
 }
 
 
-QtMyOptionsWindow::QtMyOptionsWindow(QWidget *parent_ptr)
+QtOptionsWindow::QtOptionsWindow(QWidget *parent_ptr)
 : QDialog(parent_ptr)
 {
   auto &layout = createLayout<QVBoxLayout>(*this);
@@ -53,4 +53,4 @@ QtMyOptionsWindow::QtMyOptionsWindow(QWidget *parent_ptr)
 }
 
 
-QtMyOptionsWindow::~QtMyOptionsWindow() = default;
+QtOptionsWindow::~QtOptionsWindow() = default;

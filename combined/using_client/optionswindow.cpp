@@ -1,4 +1,4 @@
-#include "myoptionswindow.hpp"
+#include "optionswindow.hpp"
 
 #include <cassert>
 #include <iostream>
@@ -9,26 +9,26 @@ using std::cerr;
 // Controller
 ////////////////////////////
 
-void MyOptionsWindow::controllerOnOpenWindow()
+void OptionsWindow::controllerOnOpenWindow()
 {
   _controllerUpdateLabelAxesToggleState();
 }
 
 
-void MyOptionsWindow::controllerOnLabelAxesToggled()
+void OptionsWindow::controllerOnLabelAxesToggled()
 {
   _controllerUpdateLabelAxesValue();
   _client().onOptionsChanged();
 }
 
 
-void MyOptionsWindow::_controllerUpdateLabelAxesToggleState()
+void OptionsWindow::_controllerUpdateLabelAxesToggleState()
 {
   viewSetLabelAxesToggleState(_options().label_axes);
 }
 
 
-void MyOptionsWindow::_controllerUpdateLabelAxesValue()
+void OptionsWindow::_controllerUpdateLabelAxesValue()
 {
   _options().label_axes = viewLabelAxesToggleState();
 }
@@ -37,14 +37,14 @@ void MyOptionsWindow::_controllerUpdateLabelAxesValue()
 // private methods
 //////////////////
 
-MyOptionsWindow::Client &MyOptionsWindow::_client()
+OptionsWindow::Client &OptionsWindow::_client()
 {
   assert(_client_ptr);
   return *_client_ptr;
 }
 
 
-Options &MyOptionsWindow::_options()
+Options &OptionsWindow::_options()
 {
   return _client().options();
 }
@@ -53,19 +53,19 @@ Options &MyOptionsWindow::_options()
 // public methods
 //////////////////
 
-MyOptionsWindow::MyOptionsWindow() = default;
+OptionsWindow::OptionsWindow() = default;
 
 
-MyOptionsWindow::~MyOptionsWindow() = default;
+OptionsWindow::~OptionsWindow() = default;
 
 
-void MyOptionsWindow::setClientPtr(Client *arg)
+void OptionsWindow::setClientPtr(Client *arg)
 {
   _client_ptr = arg;
 }
 
 
-void MyOptionsWindow::open()
+void OptionsWindow::open()
 {
   viewOpenWindow();
   controllerOnOpenWindow();

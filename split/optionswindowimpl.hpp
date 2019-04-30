@@ -1,9 +1,9 @@
-#include "myoptionswindow.hpp"
+#include "optionswindow.hpp"
 
 
-class MyOptionsWindow::View {
+class OptionsWindow::View {
   public:
-    View(MyOptionsWindow &options_window) :_options_window(options_window) { }
+    View(OptionsWindow &options_window) :_options_window(options_window) { }
 
     virtual void setLabelAxesToggleState(bool) = 0;
     virtual bool labelAxesToggleState() const = 0;
@@ -13,19 +13,19 @@ class MyOptionsWindow::View {
     Controller &_controller() { return _options_window._controller(); }
 
   private:
-    MyOptionsWindow &_options_window;
+    OptionsWindow &_options_window;
 };
 
 
-class MyOptionsWindow::Controller {
+class OptionsWindow::Controller {
   public:
-    Controller(MyOptionsWindow &);
+    Controller(OptionsWindow &);
 
     void onOpenWindow();
     void onLabelAxesToggled();
 
   private:
-    MyOptionsWindow &_options_window;
+    OptionsWindow &_options_window;
 
     View &_view();
     Client &_client();

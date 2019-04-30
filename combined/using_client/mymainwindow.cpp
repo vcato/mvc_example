@@ -1,7 +1,7 @@
 #include "mymainwindow.hpp"
 
 #include <cassert>
-#include "myoptionswindow.hpp"
+#include "optionswindow.hpp"
 
 
 // Controller

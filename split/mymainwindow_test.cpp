@@ -3,21 +3,21 @@
 #include <cassert>
 #include <sstream>
 #include "mymainwindowimpl.hpp"
-#include "myoptionswindow.hpp"
-#include "myoptionswindowimpl.hpp"
+#include "optionswindow.hpp"
+#include "optionswindowimpl.hpp"
 
 using std::ostringstream;
 using std::string;
 
 
 namespace {
-class FakeOptionsWindow : public MyOptionsWindow
+class FakeOptionsWindow : public OptionsWindow
 {
   public:
-    class FakeView : public MyOptionsWindow::View {
+    class FakeView : public OptionsWindow::View {
       public:
         FakeView(FakeOptionsWindow &options_window_arg)
-        : MyOptionsWindow::View(options_window_arg),
+        : OptionsWindow::View(options_window_arg),
           _options_window(options_window_arg)
         {
         }
@@ -54,7 +54,7 @@ class FakeOptionsWindow : public MyOptionsWindow
     }
 
   private:
-    MyOptionsWindow::View &_view() override
+    OptionsWindow::View &_view() override
     {
       return view;
     }
@@ -88,7 +88,7 @@ class FakeMainWindow : public MyMainWindow
         options_window_exists = true;
       }
 
-      MyOptionsWindow &optionsWindow() override
+      OptionsWindow &optionsWindow() override
       {
         return _main_window.options_window;
       }

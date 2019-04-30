@@ -1,6 +1,6 @@
 #include "mymainwindow.hpp"
 #include "applicationdata.hpp"
-#include "myoptionswindow.hpp"
+#include "optionswindow.hpp"
 
 
 class MyMainWindow::View {
@@ -10,7 +10,7 @@ class MyMainWindow::View {
     virtual void openWindow() = 0;
     virtual bool optionsWindowExists() const = 0;
     virtual void createOptionsWindow() = 0;
-    virtual MyOptionsWindow &optionsWindow() = 0;
+    virtual OptionsWindow &optionsWindow() = 0;
     virtual void redraw3D() = 0;
 
   protected:
@@ -37,7 +37,7 @@ class MyMainWindow::Controller {
     void onOptionsWindowOptionsChanged();
 
   private:
-    class OptionsWindowClient : public MyOptionsWindow::Client {
+    class OptionsWindowClient : public OptionsWindow::Client {
       public:
         OptionsWindowClient(Controller &controller)
         : _controller(controller)
